@@ -8,8 +8,5 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 public class UploadImageResponse implements Serializable {
-    private int imageId;
-    private String name;
-    private long size;
-    private String link;
+    private String imageId;
 }

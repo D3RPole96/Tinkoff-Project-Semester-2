@@ -43,6 +43,8 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public void deleteImage(UUID imageId, String authorUsername) throws Exception {
         var image = getImageMeta(imageId);
+        imageRepository.deleteById(imageId);
+
         var user = userService.getUserByUsername(authorUsername);
         if (image.getUser().getId() != user.getId()) {
             throw new FileAccessException("Нет доступа к этому файлу");

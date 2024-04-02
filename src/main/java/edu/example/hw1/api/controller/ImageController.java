@@ -37,7 +37,7 @@ public class ImageController {
             @ApiResponse(responseCode = "400", description = "Файл не прошел валидацию"),
             @ApiResponse(responseCode = "500", description = "Непредвиденная ошибка")
     })
-    @PostMapping("/image")
+    @PostMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public UploadImageResponse uploadImage(@RequestParam MultipartFile file,
                                            @RequestHeader(HttpHeaders.AUTHORIZATION) String bearerToken) throws Exception {
         var jwtToken = bearerToken.substring("Bearer ".length());

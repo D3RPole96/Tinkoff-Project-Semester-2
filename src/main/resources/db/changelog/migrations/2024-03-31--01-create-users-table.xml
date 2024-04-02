@@ -7,7 +7,7 @@
 
     <changeSet id="2024-03-31--01-create-users-table" author="kyultex">
         <createTable tableName="users">
-            <column name="id" type="uuid" autoIncrement="true" remarks="Уникальный ID пользователя">
+            <column name="id" type="uuid" remarks="Уникальный ID пользователя">
                 <constraints primaryKey="true" primaryKeyName="user_id_pk"/>
             </column>
             <column name="username" type="varchar(255)" remarks="Имя пользвователя">

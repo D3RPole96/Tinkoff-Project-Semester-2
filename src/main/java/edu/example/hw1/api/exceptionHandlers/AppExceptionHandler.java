@@ -4,6 +4,8 @@ import edu.example.hw1.api.dto.UiSuccessContainer;
 import edu.example.hw1.api.exceptions.BadRequestException;
 import edu.example.hw1.api.exceptions.EntityNotFoundException;
 import edu.example.hw1.api.exceptions.FileAccessException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.expression.AccessException;
@@ -64,10 +66,12 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
         return handleException("Bad Request: " + exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(MaxUploadSizeExceededException.class)
-    public ResponseEntity<? extends UiSuccessContainer> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException exception) {
-        return handleException("File upload failed: File too large!", HttpStatus.BAD_REQUEST);
-    }
+//    @ExceptionHandler(MaxUploadSizeExceededException.class)
+//    public ResponseEntity<? extends UiSuccessContainer> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException exception,
+//                                                                                             HttpServletRequest request,
+//                                                                                             HttpServletResponse response) {
+//        return handleException("Размер файла превышает 10МБ", HttpStatus.BAD_REQUEST);
+//    }
 
     @ExceptionHandler(FileAccessException.class)
     public ResponseEntity<? extends UiSuccessContainer> handleFileAccessException(FileAccessException fileAccessException) {

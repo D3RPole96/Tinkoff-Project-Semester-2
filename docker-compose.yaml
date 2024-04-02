@@ -1,13 +1,13 @@
 version: '3.5'
 services:
   service-back:
-    image: kyultex/tinkoff-project-semester-two-back:0.0.4
+    image: kyultex/tinkoff-project-semester-two-back:0.0.1
     container_name: backend-service-container
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:8181"
+      - "8080:8080"
     depends_on:
       - postgres
       - minio
