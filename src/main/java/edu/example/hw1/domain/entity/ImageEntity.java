@@ -12,20 +12,20 @@ import java.util.UUID;
 @Table(name = "images")
 @Accessors(chain = true)
 public class ImageEntity implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
-    @Column(name = "name", length = 100)
-    private String name;
+  @Column(name = "name", length = 100)
+  private String name;
 
-    @Column(name = "size")
-    private Long size;
+  @Column(name = "size")
+  private Long size;
 
-    @Column(name = "link", length = 300)
-    private String link;
+  @Column(name = "link", length = 300)
+  private String link;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private UserEntity user;
+  @ManyToOne
+  @JoinColumn(name = "user_id", referencedColumnName = "id")
+  private UserEntity user;
 }

@@ -17,40 +17,40 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
-    private final AuthenticationManager authenticationManager;
-    private final UserDetailsService userDetailsService;
+  private final UserRepository userRepository;
+  private final PasswordEncoder passwordEncoder;
+  private final JwtService jwtService;
+  private final AuthenticationManager authenticationManager;
+  private final UserDetailsService userDetailsService;
 
-    @Override
-    public String register(UserEntity user) {
-        encodeUserPassword(user);
+  @Override
+  public String register(UserEntity user) {
+    encodeUserPassword(user);
 
-        user.setRole(UserRole.USER);
-        user.setDeleted(false);
-        user.setCreationTime(LocalDateTime.now(ZoneOffset.UTC));
-        userRepository.save(user);
+    user.setRole(UserRole.USER);
+    user.setDeleted(false);
+    user.setCreationTime(LocalDateTime.now(ZoneOffset.UTC));
+    userRepository.save(user);
 
-        return jwtService.generateToken(user);
-    }
+    return jwtService.generateToken(user);
+  }
 
-    @Override
-    public String authenticate(UserEntity user) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        user.getUsername(),
-                        user.getPassword()
-                )
-        );
-        var userDetails = userDetailsService.loadUserByUsername(user.getUsername());
-        return jwtService.generateToken(userDetails);
-    }
+  @Override
+  public String authenticate(UserEntity user) {
+    authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(
+            user.getUsername(),
+            user.getPassword()
+        )
+    );
+    var userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+    return jwtService.generateToken(userDetails);
+  }
 
-    private void encodeUserPassword(UserEntity user) {
-        var userPassword = user.getPassword();
-        user.setPassword(passwordEncoder.encode(userPassword));
-    }
+  private void encodeUserPassword(UserEntity user) {
+    var userPassword = user.getPassword();
+    user.setPassword(passwordEncoder.encode(userPassword));
+  }
 }
 
 

@@ -7,8 +7,11 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ImageService {
-    byte[] downloadImage(UUID imageId, String authorUsername) throws Exception;
-    ImageEntity uploadImageToUser(MultipartFile file, String authorUsername) throws Exception;
-    void deleteImage(UUID imageId, String authorUsername) throws Exception;
-    List<ImageEntity> getUserImages(String username);
+  byte[] downloadImage(UUID imageId, String authorUsername) throws Exception;
+
+  ImageEntity uploadImageToUser(MultipartFile file, String authorUsername) throws Exception;
+
+  void deleteImage(UUID imageId, String authorUsername) throws Exception;
+
+  List<ImageEntity> getUserImages(String username);
 }

@@ -15,43 +15,43 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 @RestControllerAdvice
 public class AppExceptionHandler {
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<UiSuccessContainer> handleEntityNotFoundException(EntityNotFoundException entityNotFoundException) {
-        return handleException(entityNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
-    }
+  @ExceptionHandler(EntityNotFoundException.class)
+  public ResponseEntity<UiSuccessContainer> handleEntityNotFoundException(EntityNotFoundException entityNotFoundException) {
+    return handleException(entityNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
+  }
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<UiSuccessContainer> handleDataIntegrityViolationException(DataIntegrityViolationException dataIntegrityViolationException) {
-        return handleException(dataIntegrityViolationException.getCause().getLocalizedMessage(), HttpStatus.CONFLICT);
-    }
+  @ExceptionHandler(DataIntegrityViolationException.class)
+  public ResponseEntity<UiSuccessContainer> handleDataIntegrityViolationException(DataIntegrityViolationException dataIntegrityViolationException) {
+    return handleException(dataIntegrityViolationException.getCause().getLocalizedMessage(), HttpStatus.CONFLICT);
+  }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<UiSuccessContainer> handleIllegalArgumentException(IllegalArgumentException illegalArgumentException) {
-        return handleException(illegalArgumentException.getCause().getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-    }
+  @ExceptionHandler(IllegalArgumentException.class)
+  public ResponseEntity<UiSuccessContainer> handleIllegalArgumentException(IllegalArgumentException illegalArgumentException) {
+    return handleException(illegalArgumentException.getCause().getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+  }
 
-    @ExceptionHandler(AccessException.class)
-    public ResponseEntity<UiSuccessContainer> handleAccessException(AccessException exception) {
-        return handleException("Доступ запрещен: " + exception.getMessage(), HttpStatus.FORBIDDEN);
-    }
+  @ExceptionHandler(AccessException.class)
+  public ResponseEntity<UiSuccessContainer> handleAccessException(AccessException exception) {
+    return handleException("Доступ запрещен: " + exception.getMessage(), HttpStatus.FORBIDDEN);
+  }
 
-    @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<UiSuccessContainer> handleBadRequestException(BadRequestException exception) {
-        return handleException("Bad Request: " + exception.getMessage(), HttpStatus.BAD_REQUEST);
-    }
+  @ExceptionHandler(BadRequestException.class)
+  public ResponseEntity<UiSuccessContainer> handleBadRequestException(BadRequestException exception) {
+    return handleException("Bad Request: " + exception.getMessage(), HttpStatus.BAD_REQUEST);
+  }
 
-    @ExceptionHandler(MaxUploadSizeExceededException.class)
-    public ResponseEntity<UiSuccessContainer> handleMaxUploadSizeExceededException() {
-        return handleException("Размер файла превышает 10МБ", HttpStatus.BAD_REQUEST);
-    }
+  @ExceptionHandler(MaxUploadSizeExceededException.class)
+  public ResponseEntity<UiSuccessContainer> handleMaxUploadSizeExceededException() {
+    return handleException("Размер файла превышает 10МБ", HttpStatus.BAD_REQUEST);
+  }
 
-    @ExceptionHandler(FileAccessException.class)
-    public ResponseEntity<UiSuccessContainer> handleFileAccessException(FileAccessException fileAccessException) {
-        return handleException(fileAccessException.getMessage(), HttpStatus.NOT_FOUND);
-    }
+  @ExceptionHandler(FileAccessException.class)
+  public ResponseEntity<UiSuccessContainer> handleFileAccessException(FileAccessException fileAccessException) {
+    return handleException(fileAccessException.getMessage(), HttpStatus.NOT_FOUND);
+  }
 
-    private ResponseEntity<UiSuccessContainer> handleException(String exceptionMessage, HttpStatusCode status) {
-        var body = new UiSuccessContainer(false, exceptionMessage);
-        return new ResponseEntity<>(body, status);
-    }
+  private ResponseEntity<UiSuccessContainer> handleException(String exceptionMessage, HttpStatusCode status) {
+    var body = new UiSuccessContainer(false, exceptionMessage);
+    return new ResponseEntity<>(body, status);
+  }
 }

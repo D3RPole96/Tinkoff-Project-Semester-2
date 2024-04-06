@@ -7,7 +7,8 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface AuthenticationMapper {
-    UserEntity authenticationLoginDtoToUser(AuthenticationLoginDto authenticationLoginDto);
-    UserEntity authenticationRegisterDtoToUser(AuthenticationRegisterDto authenticationRegisterDto);
+  UserEntity authenticationLoginDtoToUser(AuthenticationLoginDto authenticationLoginDto);
+
+  UserEntity authenticationRegisterDtoToUser(AuthenticationRegisterDto authenticationRegisterDto);
 }
 

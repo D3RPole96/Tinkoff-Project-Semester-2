@@ -14,59 +14,59 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class ImageServiceImpl implements ImageService {
-    private final ImageRepository imageRepository;
-    private final MinioService minioService;
-    private final UserService userService;
+  private final ImageRepository imageRepository;
+  private final MinioService minioService;
+  private final UserService userService;
 
-    @Override
-    public byte[] downloadImage(UUID imageId, String authorUsername) throws Exception {
-        var image = getImageMeta(imageId);
-        var user = userService.getUserByUsername(authorUsername);
+  @Override
+  public byte[] downloadImage(UUID imageId, String authorUsername) throws Exception {
+    var image = getImageMeta(imageId);
+    var user = userService.getUserByUsername(authorUsername);
 
-        var a = image.getUser().getId();
-        var b = user.getId();
+    var a = image.getUser().getId();
+    var b = user.getId();
 
-        if (!image.getUser().getId().equals(user.getId())) {
-            throw new FileAccessException("Нет доступа к этому файлу");
-        }
-
-        return minioService.downloadImage(image.getLink());
+    if (!image.getUser().getId().equals(user.getId())) {
+      throw new FileAccessException("Нет доступа к этому файлу");
     }
 
-    @Override
-    public ImageEntity uploadImageToUser(MultipartFile file, String authorUsername) throws Exception {
-        var user = userService.getUserByUsername(authorUsername);
-        var image = minioService.uploadImage(file);
-        image.setUser(user);
+    return minioService.downloadImage(image.getLink());
+  }
 
-        imageRepository.save(image);
+  @Override
+  public ImageEntity uploadImageToUser(MultipartFile file, String authorUsername) throws Exception {
+    var user = userService.getUserByUsername(authorUsername);
+    var image = minioService.uploadImage(file);
+    image.setUser(user);
 
-        return image;
+    imageRepository.save(image);
+
+    return image;
+  }
+
+  @Override
+  public void deleteImage(UUID imageId, String authorUsername) throws Exception {
+    var image = getImageMeta(imageId);
+    imageRepository.deleteById(imageId);
+
+    var user = userService.getUserByUsername(authorUsername);
+    if (!image.getUser().getId().equals(user.getId())) {
+      throw new FileAccessException("Нет доступа к этому файлу");
     }
 
-    @Override
-    public void deleteImage(UUID imageId, String authorUsername) throws Exception {
-        var image = getImageMeta(imageId);
-        imageRepository.deleteById(imageId);
+    minioService.deleteImage(image.getLink());
+  }
 
-        var user = userService.getUserByUsername(authorUsername);
-        if (!image.getUser().getId().equals(user.getId())) {
-            throw new FileAccessException("Нет доступа к этому файлу");
-        }
+  @Override
+  public List<ImageEntity> getUserImages(String username) {
+    var user = userService.getUserByUsername(username);
 
-        minioService.deleteImage(image.getLink());
-    }
+    return imageRepository.findAllByUserId(user.getId());
+  }
 
-    @Override
-    public List<ImageEntity> getUserImages(String username) {
-        var user = userService.getUserByUsername(username);
-
-        return imageRepository.findAllByUserId(user.getId());
-    }
-
-    private ImageEntity getImageMeta(UUID imageId) {
-        return imageRepository
-                .findImageEntityById(imageId)
-                .orElseThrow(() -> new EntityNotFoundException("Картинка с указанным ID не найдена"));
-    }
+  private ImageEntity getImageMeta(UUID imageId) {
+    return imageRepository
+        .findImageEntityById(imageId)
+        .orElseThrow(() -> new EntityNotFoundException("Картинка с указанным ID не найдена"));
+  }
 }
