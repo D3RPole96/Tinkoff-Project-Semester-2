@@ -22,7 +22,11 @@ public class ImageServiceImpl implements ImageService {
     public byte[] downloadImage(UUID imageId, String authorUsername) throws Exception {
         var image = getImageMeta(imageId);
         var user = userService.getUserByUsername(authorUsername);
-        if (image.getUser().getId() != user.getId()) {
+
+        var a = image.getUser().getId();
+        var b = user.getId();
+
+        if (!image.getUser().getId().equals(user.getId())) {
             throw new FileAccessException("Нет доступа к этому файлу");
         }
 
@@ -46,7 +50,7 @@ public class ImageServiceImpl implements ImageService {
         imageRepository.deleteById(imageId);
 
         var user = userService.getUserByUsername(authorUsername);
-        if (image.getUser().getId() != user.getId()) {
+        if (!image.getUser().getId().equals(user.getId())) {
             throw new FileAccessException("Нет доступа к этому файлу");
         }
 
@@ -62,7 +66,7 @@ public class ImageServiceImpl implements ImageService {
 
     private ImageEntity getImageMeta(UUID imageId) {
         return imageRepository
-                .findImageById(imageId)
+                .findImageEntityById(imageId)
                 .orElseThrow(() -> new EntityNotFoundException("Картинка с указанным ID не найдена"));
     }
 }

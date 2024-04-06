@@ -11,6 +11,4 @@ import java.util.UUID;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, UUID> {
     Optional<UserEntity> findByUsername(String username);
-    List<UserEntity> findAllByIsDeletedIsFalse();
-    List<UserEntity> findAllByIsDeletedIsTrue();
 }

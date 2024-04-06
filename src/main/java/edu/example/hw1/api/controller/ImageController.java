@@ -7,6 +7,8 @@ import edu.example.hw1.api.mapper.ImageMapper;
 import edu.example.hw1.domain.service.ImageService;
 import edu.example.hw1.domain.service.JwtService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.HttpHeaders;
 
+import java.util.Base64;
 import java.util.UUID;
 
 @RestController
@@ -30,12 +33,14 @@ public class ImageController {
     private final ImageMapper imageMapper;
     private final JwtService jwtService;
 
-    @Tags(value = { @Tag(name = "Image Controller") })
     @Operation(summary = "Загрузка нового изображения в систему", operationId = "uploadImage")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Успех выполнения операции"),
-            @ApiResponse(responseCode = "400", description = "Файл не прошел валидацию"),
-            @ApiResponse(responseCode = "500", description = "Непредвиденная ошибка")
+            @ApiResponse(responseCode = "200", description = "Успех выполнения операции",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UploadImageResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Файл не прошел валидацию",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UiSuccessContainer.class))),
+            @ApiResponse(responseCode = "500", description = "Непредвиденная ошибка",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UiSuccessContainer.class)))
     })
     @PostMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public UploadImageResponse uploadImage(@RequestParam MultipartFile file,
@@ -46,24 +51,25 @@ public class ImageController {
         return imageMapper.imageEntityToUploadImageResponse(imageService.uploadImageToUser(file, authorUsername));
     }
 
-    @Tags(value = { @Tag(name = "Image Controller") })
     @Operation(summary = "Скачивание файла по ИД", operationId = "downloadImage")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Успех выполнения операции"),
-            @ApiResponse(responseCode = "404", description = "Файл не найден в системе или недоступен"),
-            @ApiResponse(responseCode = "500", description = "Непредвиденная ошибка")
+            @ApiResponse(responseCode = "200", description = "Успех выполнения операции",
+                    content = @Content(mediaType = MediaType.ALL_VALUE)),
+            @ApiResponse(responseCode = "404", description = "Файл не найден в системе или недоступен",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UiSuccessContainer.class))),
+            @ApiResponse(responseCode = "500", description = "Непредвиденная ошибка",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UiSuccessContainer.class)))
     })
-    @GetMapping(value = "/image/{image-id}", produces = MediaType.IMAGE_PNG_VALUE)
-    public byte[] downloadImage(@PathVariable("image-id") String imageId,
+    @GetMapping(value = "/image/{image-id}")
+    public String downloadImage(@PathVariable("image-id") String imageId,
                            @RequestHeader(HttpHeaders.AUTHORIZATION) String bearerToken) throws Exception {
         var jwtToken = bearerToken.substring("Bearer ".length());
         var authorUsername = jwtService.getUsernameFromToken(jwtToken);
         var imageIdUUID = UUID.fromString(imageId);
 
-        return imageService.downloadImage(imageIdUUID, authorUsername);
+        return Base64.getEncoder().encodeToString(imageService.downloadImage(imageIdUUID, authorUsername));
     }
 
-    @Tags(value = { @Tag(name = "Image Controller") })
     @Operation(summary = "Удаление файла по ИД", operationId = "deleteImage")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Успех выполнения операции"),
@@ -82,7 +88,6 @@ public class ImageController {
         return new UiSuccessContainer();
     }
 
-    @Tags(value = { @Tag(name = "Image Controller") })
     @Operation(summary = "Получение списка изображений, которые доступны пользователю", operationId = "getImages")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Успех выполнения операции"),

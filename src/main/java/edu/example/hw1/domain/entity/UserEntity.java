@@ -79,8 +79,9 @@ public class UserEntity implements Serializable, UserDetails {
         return !isDeleted;
     }
 
-    public void setDeleted(boolean value) {
+    public UserEntity setDeleted(boolean value) {
         isDeleted = value;
+        return this;
     }
 
     public boolean isDeleted() {

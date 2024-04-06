@@ -24,11 +24,4 @@ public interface ImageMapper {
                 .toList()
                 .toArray(new Image[0]));
     }
-
-    default List<UploadImageResponse> imageEntitiesToUploadImageResponses(List<ImageEntity> imageEntities) {
-        return imageEntities
-                .stream()
-                .map(this::imageEntityToUploadImageResponse)
-                .toList();
-    }
 }

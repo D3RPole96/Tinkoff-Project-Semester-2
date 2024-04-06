@@ -16,8 +16,8 @@ spring:
     default-schema: public
   servlet:
     multipart:
-      max-file-size: 10MB
-      max-request-size: 10MB
+      maxFileSize: 10485760
+      maxRequestSize: 10485760
 
 minio:
   url: http://localhost:9000
