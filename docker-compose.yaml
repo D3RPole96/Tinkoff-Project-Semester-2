@@ -1,0 +1,48 @@
+version: '3.5'
+services:
+  service-back:
+    image: kyultex/tinkoff-project-semester-two-back:0.0.1
+    container_name: backend-service-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - minio
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/tinkoff-hw-db
+      - MINIO_URL=minio
+
+  postgres:
+    image: postgres:15.6-alpine
+    container_name: postgres-container
+    environment:
+      POSTGRES_DB: tinkoff-hw-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "15432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio-container
+    environment:
+      MINIO_ROOT_USER: user
+      MINIO_ROOT_PASSWORD: password
+    volumes:
+      - ./environment/minio/data:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    command: server /data --console-address :9001
+
+volumes:
+  db-data:
+  tinkoff-hw-db:
+  storage-minio:
