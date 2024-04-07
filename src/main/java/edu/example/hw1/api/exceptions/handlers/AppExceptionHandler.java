@@ -1,4 +1,4 @@
-package edu.example.hw1.api.exceptionHandlers;
+package edu.example.hw1.api.exceptions.handlers;
 
 import edu.example.hw1.api.dto.UiSuccessContainer;
 import edu.example.hw1.api.exceptions.BadRequestException;
@@ -13,21 +13,30 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
+/**
+ * Exception handler for Spring Boot application.
+ * Returns UiSuccessContainer with status code.
+ */
 @RestControllerAdvice
 public class AppExceptionHandler {
   @ExceptionHandler(EntityNotFoundException.class)
-  public ResponseEntity<UiSuccessContainer> handleEntityNotFoundException(EntityNotFoundException entityNotFoundException) {
+  public ResponseEntity<UiSuccessContainer> handleEntityNotFoundException(
+      EntityNotFoundException entityNotFoundException) {
     return handleException(entityNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
   }
 
   @ExceptionHandler(DataIntegrityViolationException.class)
-  public ResponseEntity<UiSuccessContainer> handleDataIntegrityViolationException(DataIntegrityViolationException dataIntegrityViolationException) {
-    return handleException(dataIntegrityViolationException.getCause().getLocalizedMessage(), HttpStatus.CONFLICT);
+  public ResponseEntity<UiSuccessContainer> handleDataIntegrityViolationException(
+      DataIntegrityViolationException dataIntegrityViolationException) {
+    return handleException(dataIntegrityViolationException.getCause().getLocalizedMessage(),
+        HttpStatus.CONFLICT);
   }
 
   @ExceptionHandler(IllegalArgumentException.class)
-  public ResponseEntity<UiSuccessContainer> handleIllegalArgumentException(IllegalArgumentException illegalArgumentException) {
-    return handleException(illegalArgumentException.getCause().getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+  public ResponseEntity<UiSuccessContainer> handleIllegalArgumentException(
+      IllegalArgumentException illegalArgumentException) {
+    return handleException(illegalArgumentException.getCause().getLocalizedMessage(),
+        HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler(AccessException.class)
@@ -36,7 +45,8 @@ public class AppExceptionHandler {
   }
 
   @ExceptionHandler(BadRequestException.class)
-  public ResponseEntity<UiSuccessContainer> handleBadRequestException(BadRequestException exception) {
+  public ResponseEntity<UiSuccessContainer> handleBadRequestException(
+      BadRequestException exception) {
     return handleException("Bad Request: " + exception.getMessage(), HttpStatus.BAD_REQUEST);
   }
 
@@ -46,11 +56,13 @@ public class AppExceptionHandler {
   }
 
   @ExceptionHandler(FileAccessException.class)
-  public ResponseEntity<UiSuccessContainer> handleFileAccessException(FileAccessException fileAccessException) {
+  public ResponseEntity<UiSuccessContainer> handleFileAccessException(
+      FileAccessException fileAccessException) {
     return handleException(fileAccessException.getMessage(), HttpStatus.NOT_FOUND);
   }
 
-  private ResponseEntity<UiSuccessContainer> handleException(String exceptionMessage, HttpStatusCode status) {
+  private ResponseEntity<UiSuccessContainer> handleException(String exceptionMessage,
+                                                             HttpStatusCode status) {
     var body = new UiSuccessContainer(false, exceptionMessage);
     return new ResponseEntity<>(body, status);
   }

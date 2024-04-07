@@ -4,13 +4,15 @@ import edu.example.hw1.api.exceptions.EntityNotFoundException;
 import edu.example.hw1.api.exceptions.FileAccessException;
 import edu.example.hw1.domain.entity.ImageEntity;
 import edu.example.hw1.repository.ImageRepository;
+import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.UUID;
-
+/**
+ * Implementation of images service.
+ */
 @Service
 @RequiredArgsConstructor
 public class ImageServiceImpl implements ImageService {

@@ -11,11 +11,19 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Config for Spring Boot application.
+ */
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
   private final UserDetailsService userDetailsService;
 
+  /**
+   * Authentication provider bean with UserDetailsService and PasswordEncoder.
+   *
+   * @return AuthenticationProvider
+   */
   @Bean
   public AuthenticationProvider authenticationProvider() {
     var authProvider = new DaoAuthenticationProvider();
@@ -25,11 +33,24 @@ public class ApplicationConfig {
     return authProvider;
   }
 
+  /**
+   * Authentication manager bean.
+   *
+   * @param configuration Authentication configuration
+   * @return AuthenticationManager
+   * @throws Exception One of the authentication errors
+   */
   @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
+      throws Exception {
     return configuration.getAuthenticationManager();
   }
 
+  /**
+   * Password encoder bean.
+   *
+   * @return BCryptPasswordEncoder
+   */
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();

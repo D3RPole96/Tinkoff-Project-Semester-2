@@ -3,8 +3,10 @@ package edu.example.hw1.config;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
+/**
+ * MinIO properties for MinIO config and MinIO service.
+ */
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "minio")

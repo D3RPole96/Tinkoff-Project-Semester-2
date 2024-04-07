@@ -3,6 +3,8 @@ package edu.example.hw1.domain.service;
 import edu.example.hw1.domain.entity.UserEntity;
 import edu.example.hw1.domain.entity.UserRole;
 import edu.example.hw1.repository.UserRepository;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,10 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.Objects;
-
+/**
+ * Implementation of authentication service.
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {

@@ -6,14 +6,16 @@ import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import io.minio.RemoveObjectArgs;
+import java.io.ByteArrayInputStream;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.compress.utils.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
-import java.util.UUID;
-
+/**
+ * Implementation of MinIO S3 storage service.
+ */
 @Service
 @RequiredArgsConstructor
 public class MinioServiceImpl implements MinioService {
@@ -35,7 +37,10 @@ public class MinioServiceImpl implements MinioService {
             .build()
     );
 
-    return new ImageEntity().setName(file.getOriginalFilename()).setSize(file.getSize()).setLink(fileId);
+    return new ImageEntity()
+        .setName(file.getOriginalFilename())
+        .setSize(file.getSize())
+        .setLink(fileId);
   }
 
   @Override

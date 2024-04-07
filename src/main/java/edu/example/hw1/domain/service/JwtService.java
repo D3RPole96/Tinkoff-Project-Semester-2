@@ -1,11 +1,13 @@
 package edu.example.hw1.domain.service;
 
 import io.jsonwebtoken.Claims;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Map;
 import java.util.function.Function;
+import org.springframework.security.core.userdetails.UserDetails;
 
+/**
+ * Interface of JWT Bearer token service.
+ */
 public interface JwtService {
   String getUsernameFromToken(String jwtToken);
 

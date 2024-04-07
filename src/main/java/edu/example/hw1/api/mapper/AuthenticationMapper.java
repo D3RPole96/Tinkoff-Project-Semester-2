@@ -5,6 +5,9 @@ import edu.example.hw1.api.dto.auth.AuthenticationRegisterDto;
 import edu.example.hw1.domain.entity.UserEntity;
 import org.mapstruct.Mapper;
 
+/**
+ * Mapper for authentication entities and data transfer objects.
+ */
 @Mapper(componentModel = "spring")
 public interface AuthenticationMapper {
   UserEntity authenticationLoginDtoToUser(AuthenticationLoginDto authenticationLoginDto);
