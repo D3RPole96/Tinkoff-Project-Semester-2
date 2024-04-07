@@ -1,16 +1,14 @@
 package edu.example.hw1.service;
 
-import edu.example.hw1.api.exceptions.EntityNotFoundException;
 import edu.example.hw1.config.PostgreTestConfig;
 import edu.example.hw1.domain.entity.UserEntity;
 import edu.example.hw1.domain.entity.UserRole;
-import edu.example.hw1.domain.service.AuthenticationService;
 import edu.example.hw1.domain.service.JwtService;
-import edu.example.hw1.domain.service.UserService;
-import edu.example.hw1.repository.UserRepository;
 import io.jsonwebtoken.Claims;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.Collection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +18,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @ContextConfiguration(initializers = PostgreTestConfig.Initializer.class)
