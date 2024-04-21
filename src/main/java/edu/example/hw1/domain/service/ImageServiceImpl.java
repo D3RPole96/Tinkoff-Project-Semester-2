@@ -25,9 +25,6 @@ public class ImageServiceImpl implements ImageService {
     var image = getImageMeta(imageId);
     var user = userService.getUserByUsername(authorUsername);
 
-    var a = image.getUser().getId();
-    var b = user.getId();
-
     if (!image.getUser().getId().equals(user.getId())) {
       throw new FileAccessException("Нет доступа к этому файлу");
     }
