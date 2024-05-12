@@ -58,6 +58,9 @@ application:
 app:
   wip-topic: ${TOPIC:images.wip}
   done-topic: ${TOPIC:images.done}
-  partitions: ${PARTITIONS:2}
+  partitions: ${PARTITIONS:1}
   replicas: ${REPLICAS:3}
   group-id: ${GROUP_ID:custom-group-id}
+  kafka:
+    username: kafka_user
+    password: kafka_pass

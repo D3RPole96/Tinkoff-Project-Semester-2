@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="2024-05-11--01-create-image-filter-requests-table" author="kyultex">
+        <createTable tableName="image_filter_requests">
+            <column name="request_id" type="uuid">
+                <constraints primaryKey="true" primaryKeyName="request_id_pk"/>
+            </column>
+
+            <column name="unedited_image_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="edited_image_id" type="uuid">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="status" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2024-05-11--01-create-filters-to-image-table" author="kyultex">
+        <createTable tableName="filters_to_image">
+            <column name="request_id" type="uuid">
+                <constraints primaryKey="true" primaryKeyName="request_id_pk"/>
+            </column>
+
+            <column name="filter" type="varchar(300)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey
+                tableName="filters_to_image"
+                columnNames="request_id, filter"
+                constraintName="filters_to_image_pk"/>
+
+        <createIndex indexName="request_id_index" tableName="filters_to_image">
+            <column name="request_id"/>
+        </createIndex>
+
+        <addForeignKeyConstraint
+                baseTableName="filters_to_image"
+                baseColumnNames="request_id"
+                constraintName="request_id_fk"
+                referencedTableName="image_filter_requests"
+                referencedColumnNames="request_id"
+                onUpdate="CASCADE"
+                onDelete="CASCADE"/>
+    </changeSet>
+</databaseChangeLog>

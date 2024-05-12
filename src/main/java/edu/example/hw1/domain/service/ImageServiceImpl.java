@@ -22,12 +22,7 @@ public class ImageServiceImpl implements ImageService {
 
   @Override
   public byte[] downloadImage(UUID imageId, String authorUsername) throws Exception {
-    var image = getImageMeta(imageId);
-    var user = userService.getUserByUsername(authorUsername);
-
-    if (!image.getUser().getId().equals(user.getId())) {
-      throw new FileAccessException("Нет доступа к этому файлу");
-    }
+    var image = getImageMeta(imageId, authorUsername);
 
     return minioService.downloadImage(image.getLink());
   }
@@ -45,13 +40,8 @@ public class ImageServiceImpl implements ImageService {
 
   @Override
   public void deleteImage(UUID imageId, String authorUsername) throws Exception {
-    var image = getImageMeta(imageId);
+    var image = getImageMeta(imageId, authorUsername);
     imageRepository.deleteById(imageId);
-
-    var user = userService.getUserByUsername(authorUsername);
-    if (!image.getUser().getId().equals(user.getId())) {
-      throw new FileAccessException("Нет доступа к этому файлу");
-    }
 
     minioService.deleteImage(image.getLink());
   }
@@ -63,9 +53,18 @@ public class ImageServiceImpl implements ImageService {
     return imageRepository.findAllByUserId(user.getId());
   }
 
-  private ImageEntity getImageMeta(UUID imageId) {
-    return imageRepository
+  @Override
+  public ImageEntity getImageMeta(UUID imageId, String authorUsername) {
+    var image = imageRepository
         .findImageEntityById(imageId)
         .orElseThrow(() -> new EntityNotFoundException("Картинка с указанным ID не найдена"));
+
+    var user = userService.getUserByUsername(authorUsername);
+
+    if (!image.getUser().getId().equals(user.getId())) {
+      throw new FileAccessException("Нет доступа к этому файлу");
+    }
+
+    return image;
   }
 }
