@@ -10,8 +10,12 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface ImageService {
   byte[] downloadImage(UUID imageId, String authorUsername) throws Exception;
+
   ImageEntity uploadImageToUser(MultipartFile file, String authorUsername) throws Exception;
+
   void deleteImage(UUID imageId, String authorUsername) throws Exception;
+
   List<ImageEntity> getUserImages(String username);
+
   ImageEntity getImageMeta(UUID imageId, String authorUsername);
 }

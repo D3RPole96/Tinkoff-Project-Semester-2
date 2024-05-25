@@ -27,19 +27,18 @@
 
     <changeSet id="2024-05-11--01-create-filters-to-image-table" author="kyultex">
         <createTable tableName="filters_to_image">
+            <column name="filter_to_image_id" type="uuid">
+                <constraints primaryKey="true" primaryKeyName="filters_to_image_id_pk"/>
+            </column>
+
             <column name="request_id" type="uuid">
-                <constraints primaryKey="true" primaryKeyName="request_id_pk"/>
+                <constraints nullable="false"/>
             </column>
 
             <column name="filter" type="varchar(300)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
-
-        <addPrimaryKey
-                tableName="filters_to_image"
-                columnNames="request_id, filter"
-                constraintName="filters_to_image_pk"/>
 
         <createIndex indexName="request_id_index" tableName="filters_to_image">
             <column name="request_id"/>

@@ -1,6 +1,5 @@
 package edu.example.hw1.api.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.example.hw1.api.dto.ApplyImageFiltersResponse;
 import edu.example.hw1.api.dto.GetModifiedImageByRequestIdResponse;
 import edu.example.hw1.api.dto.UiSuccessContainer;
@@ -18,7 +17,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Arrays;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,8 +31,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Tag(name = "ImageController",
-    description = "Базовый CRUD API для работы " +
-        "с пользовательскими запросами на редактирование картинок")
+    description = "Базовый CRUD API для работы "
+        + "с пользовательскими запросами на редактирование картинок")
 @RequestMapping("/api/v1")
 @SecurityRequirement(name = "bearerAuth")
 @RequiredArgsConstructor
@@ -116,6 +114,6 @@ public class ImageFiltersController {
         .getModifiedImageByRequestId(uuidImageId, uuidRequestId, authorUsername);
 
     return imageFilterRequestMapper
-        .ImageFilterRequestEntityToGetModifiedImageByRequestIdResponse(imageFilterRequest);
+        .imageFilterRequestEntityToGetModifiedImageByRequestIdResponse(imageFilterRequest);
   }
 }

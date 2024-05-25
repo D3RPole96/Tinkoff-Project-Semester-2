@@ -18,6 +18,9 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaAdmin.NewTopics;
 import org.springframework.kafka.core.KafkaTemplate;
 
+/**
+ * Config for Kafka.
+ */
 @Configuration
 @RequiredArgsConstructor
 @EnableConfigurationProperties(KafkaProperties.class)
@@ -25,6 +28,15 @@ import org.springframework.kafka.core.KafkaTemplate;
 public class KafkaConfig {
   private final KafkaProperties properties;
 
+  /**
+   * Topics bean.
+   *
+   * @param wipTopic  WIP topic
+   * @param doneTopic DONE topic
+   * @param partitions partitions
+   * @param replicas replicas count
+   * @return NewTopics topics
+   */
   @Bean
   public NewTopics topic(
       @Value("${app.wip-topic}") String wipTopic,
@@ -36,6 +48,13 @@ public class KafkaConfig {
         new NewTopic(doneTopic, partitions, replicas));
   }
 
+  /**
+   * KafkaTemplate bean.
+   *
+   * @param username Kafka username
+   * @param password Kafka password
+   * @return KafkaTemplate Kafka template
+   */
   @Bean
   public KafkaTemplate<String, String> kafkaTemplate(@Value("${app.kafka.username}")
                                                      String username,

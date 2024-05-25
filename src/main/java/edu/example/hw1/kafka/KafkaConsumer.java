@@ -23,6 +23,12 @@ public class KafkaConsumer {
   private final ObjectMapper objectMapper = new ObjectMapper();
   private final ImageFilterRequestRepository imageFilterRequestRepository;
 
+  /**
+   * Kafka listener.
+   *
+   * @param record ConsumerRecord
+   * @param acknowledgment Acknowledgment
+   */
   @KafkaListener(
       topics = "${app.done-topic}",
       groupId = "${app.group-id}",
@@ -30,8 +36,8 @@ public class KafkaConsumer {
       properties = {
           ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG + "=false",
           ConsumerConfig.ISOLATION_LEVEL_CONFIG + "=read_committed",
-          ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG +
-              "=org.apache.kafka.clients.consumer.RoundRobinAssignor"
+          ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG
+              + "=org.apache.kafka.clients.consumer.RoundRobinAssignor"
       }
   )
   public void consume(ConsumerRecord<String, String> record, Acknowledgment acknowledgment)

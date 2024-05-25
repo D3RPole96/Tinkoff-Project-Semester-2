@@ -34,6 +34,11 @@ public class KafkaProducer {
     this.doneTopic = doneTopic;
   }
 
+  /**
+   * Kafka writer.
+   *
+   * @param kafkaWipMessage Message to write
+   */
   public void write(KafkaWipMessage kafkaWipMessage) throws JsonProcessingException {
     var kafkaWipMessageJson = objectMapper.writeValueAsString(kafkaWipMessage);
     template.send(wipTopic, kafkaWipMessageJson);

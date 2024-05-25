@@ -12,6 +12,7 @@ import java.util.UUID;
 public interface ImageFilterRequestService {
   UUID applyImageFilters(UUID imageId, List<Filter> filters, String authorUsername)
       throws JsonProcessingException;
+
   ImageFilterRequestEntity getModifiedImageByRequestId(UUID imageId,
                                                        UUID requestId,
                                                        String authorUsername);

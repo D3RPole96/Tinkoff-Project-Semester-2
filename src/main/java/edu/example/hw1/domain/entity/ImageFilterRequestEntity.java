@@ -15,10 +15,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
-@Data
+/**
+ * Image filter request entity. Primary key type: UUID.
+ */
 @Entity
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 @Table(name = "image_filter_requests")
 @Accessors(chain = true)
 public class ImageFilterRequestEntity {

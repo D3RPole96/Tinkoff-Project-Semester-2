@@ -13,9 +13,15 @@ import org.mapstruct.Named;
 public interface ImageFilterRequestMapper {
   @Mapping(target = "imageId", source = "imageFilterRequestEntity",
       qualifiedByName = "GetModifiedImageByRequestIdResponse")
-  GetModifiedImageByRequestIdResponse ImageFilterRequestEntityToGetModifiedImageByRequestIdResponse(
+  GetModifiedImageByRequestIdResponse imageFilterRequestEntityToGetModifiedImageByRequestIdResponse(
       ImageFilterRequestEntity imageFilterRequestEntity);
 
+  /**
+   * Mapper for image filter request entity and data transfer objects.
+   *
+   * @param imageFilterRequestEntity Image Filter Request Entity
+   * @return String Image id, modified or not
+   */
   @Named("GetModifiedImageByRequestIdResponse")
   default String getModifiedImageByRequestIdResponse(
       ImageFilterRequestEntity imageFilterRequestEntity) {

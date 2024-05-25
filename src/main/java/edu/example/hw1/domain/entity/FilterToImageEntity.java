@@ -1,34 +1,41 @@
 package edu.example.hw1.domain.entity;
 
 import edu.example.hw1.domain.utils.Filter;
-import edu.example.hw1.domain.utils.FilterToImageId;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.UUID;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
-@Data
+/**
+ * Filter to image entity. Primary key type: UUID, varchar.
+ */
 @Entity
-@Table(name = "filters_to_image",
-    indexes = @Index(columnList = "request_id", name = "request_id_index"))
-@IdClass(FilterToImageId.class)
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@Table(name = "filters_to_image")
 @Accessors(chain = true)
 public class FilterToImageEntity {
   @Id
-  @Column(name = "request_id")
-  private UUID requestId;
+  @GeneratedValue(strategy = GenerationType.UUID)
+  @Column(name = "filter_to_image_id")
+  private UUID id;
 
-  @Id
-  @Column(name = "request_id")
+  @Column(name = "filter")
   @Enumerated(EnumType.STRING)
   private Filter filter;
 

@@ -33,7 +33,7 @@ public class ImageFilterRequestServiceImpl implements ImageFilterRequestService 
     var requestId = UUID.randomUUID();
     var filtersToImage = new ArrayList<FilterToImageEntity>();
     for (var filter : filters) {
-      var filterToImage = new FilterToImageEntity().setRequestId(requestId).setFilter(filter);
+      var filterToImage = new FilterToImageEntity().setFilter(filter);
       filtersToImage.add(filterToImage);
     }
 
