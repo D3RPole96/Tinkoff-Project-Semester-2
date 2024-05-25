@@ -7,7 +7,7 @@ on:
   pull_request:
     branches:
       - main
-      - 'hw-/**'
+      - 'hw-**'
 
   workflow_dispatch:
 
