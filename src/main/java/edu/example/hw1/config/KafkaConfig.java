@@ -33,7 +33,8 @@ public class KafkaConfig {
    *
    * @param wipTopic  WIP topic
    * @param doneTopic DONE topic
-   * @param partitions partitions
+   * @param wipPartitions WIP partitions
+   * @param donePartitions DONE partitions
    * @param replicas replicas count
    * @return NewTopics topics
    */
@@ -41,11 +42,12 @@ public class KafkaConfig {
   public NewTopics topic(
       @Value("${app.wip-topic}") String wipTopic,
       @Value("${app.done-topic}") String doneTopic,
-      @Value("${app.partitions}") int partitions,
+      @Value("${app.wip-partitions}") int wipPartitions,
+      @Value("${app.done-partitions}") int donePartitions,
       @Value("${app.replicas}") short replicas) {
 
-    return new NewTopics(new NewTopic(wipTopic, partitions, replicas),
-        new NewTopic(doneTopic, partitions, replicas));
+    return new NewTopics(new NewTopic(wipTopic, wipPartitions, replicas),
+        new NewTopic(doneTopic, donePartitions, replicas));
   }
 
   /**
