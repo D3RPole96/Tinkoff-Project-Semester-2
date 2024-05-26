@@ -32,7 +32,7 @@ public class KafkaConsumer {
   @KafkaListener(
       topics = "${app.done-topic}",
       groupId = "${app.group-id}",
-      concurrency = "${app.partitions}",
+      concurrency = "${app.wip-partitions}",
       properties = {
           ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG + "=false",
           ConsumerConfig.ISOLATION_LEVEL_CONFIG + "=read_committed",

@@ -58,11 +58,12 @@ application:
       expiration-timeout-milliseconds: 86400000
 
 app:
-  wip-topic: ${TOPIC:images.wip}
-  done-topic: ${TOPIC:images.done}
-  partitions: ${PARTITIONS:1}
-  replicas: ${REPLICAS:3}
-  group-id: ${GROUP_ID:custom-group-id}
+  wip-topic: images.wip
+  done-topic: images.done
+  wip-partitions: 2
+  done-partitions: 1
+  replicas: 3
+  group-id: custom-group-id
   kafka:
     username: kafka_user
     password: kafka_pass
