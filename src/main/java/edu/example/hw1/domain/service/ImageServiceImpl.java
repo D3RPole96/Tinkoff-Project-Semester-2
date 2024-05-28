@@ -28,6 +28,13 @@ public class ImageServiceImpl implements ImageService {
   }
 
   @Override
+  public byte[] downloadImageWithoutAuthentication(UUID imageId) throws Exception {
+    var image = getImageMetaWithoutAuthentication(imageId);
+
+    return minioService.downloadImage(image.getLink());
+  }
+
+  @Override
   public ImageEntity uploadImageToUser(MultipartFile file, String authorUsername) throws Exception {
     var user = userService.getUserByUsername(authorUsername);
     var image = minioService.uploadImage(file);
@@ -66,5 +73,12 @@ public class ImageServiceImpl implements ImageService {
     }
 
     return image;
+  }
+
+  @Override
+  public ImageEntity getImageMetaWithoutAuthentication(UUID imageId) {
+    return imageRepository
+        .findImageEntityById(imageId)
+        .orElseThrow(() -> new EntityNotFoundException("Картинка с указанным ID не найдена"));
   }
 }

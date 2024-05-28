@@ -63,7 +63,10 @@ app:
   wip-partitions: 2
   done-partitions: 1
   replicas: 3
-  group-id: custom-group-id
+  wip-group-id-1: wip-group-id-1
+  wip-group-id-2: wip-group-id-2
+  wip-group-id-3: wip-group-id-3
+  done-group-id: done-group-id
   kafka:
     username: kafka_user
     password: kafka_pass
