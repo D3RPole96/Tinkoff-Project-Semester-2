@@ -1,8 +1,6 @@
 package edu.example.hw1.domain.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.example.hw1.api.exceptions.EntityNotFoundException;
-import edu.example.hw1.domain.entity.FilterToImageEntity;
 import edu.example.hw1.domain.entity.ImageFilterRequestEntity;
 import edu.example.hw1.domain.utils.Filter;
 import edu.example.hw1.domain.utils.Status;
@@ -26,29 +24,20 @@ public class ImageFilterRequestServiceImpl implements ImageFilterRequestService 
   private final KafkaProducer kafkaProducer;
 
   @Override
-  public UUID applyImageFilters(UUID imageId, List<Filter> filters, String authorUsername)
-      throws JsonProcessingException {
+  public UUID applyImageFilters(UUID imageId, List<Filter> filters, String authorUsername) {
     imageService.getImageMeta(imageId, authorUsername);
 
-    var requestId = UUID.randomUUID();
-    var filtersToImage = new ArrayList<FilterToImageEntity>();
-    for (var filter : filters) {
-      var filterToImage = new FilterToImageEntity().setFilter(filter);
-      filtersToImage.add(filterToImage);
-    }
-
     var imageFilterRequest = new ImageFilterRequestEntity()
-        .setRequestId(requestId)
         .setUneditedImageId(imageId)
-        .setStatus(Status.WIP)
-        .setFiltersToImage(filtersToImage);
+        .setStatus(Status.WIP);
 
-    var kafkaWipMessage = new KafkaWipMessage(imageId, requestId, filters);
+    var savedRequest = imageFilterRequestRepository.save(imageFilterRequest);
+
+    var kafkaWipMessage = new KafkaWipMessage(imageId, savedRequest.getRequestId(), filters);
 
     kafkaProducer.write(kafkaWipMessage);
-    imageFilterRequestRepository.save(imageFilterRequest);
 
-    return requestId;
+    return savedRequest.getRequestId();
   }
 
   @Override
@@ -56,6 +45,8 @@ public class ImageFilterRequestServiceImpl implements ImageFilterRequestService 
                                                               UUID requestId,
                                                               String authorUsername) {
     imageService.getImageMeta(imageId, authorUsername);
+
+    var a = imageFilterRequestRepository.findAll();
 
     var imageFilterRequest = imageFilterRequestRepository.findById(requestId).orElseThrow((()
         -> new EntityNotFoundException("Запрос на применение фильтров с указанным ID не найден"))

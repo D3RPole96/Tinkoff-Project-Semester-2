@@ -1,12 +1,10 @@
 package edu.example.hw1.kafka;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import edu.example.hw1.domain.utils.Status;
 import edu.example.hw1.kafka.models.KafkaDoneMessage;
 import edu.example.hw1.repository.ImageFilterRequestRepository;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -16,11 +14,10 @@ import org.springframework.stereotype.Component;
 /**
  * Kafka consumer.
  */
-@Slf4j
 @Component
 @AllArgsConstructor
 public class KafkaConsumer {
-  private final ObjectMapper objectMapper = new ObjectMapper();
+  private final Gson gson = new Gson();
   private final ImageFilterRequestRepository imageFilterRequestRepository;
 
   /**
@@ -31,8 +28,8 @@ public class KafkaConsumer {
    */
   @KafkaListener(
       topics = "${app.done-topic}",
-      groupId = "${app.done-group-id}",
-      concurrency = "${app.done-partitions}",
+      groupId = "${app.group-id}",
+      concurrency = "${app.partitions}",
       properties = {
           ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG + "=false",
           ConsumerConfig.ISOLATION_LEVEL_CONFIG + "=read_committed",
@@ -40,9 +37,8 @@ public class KafkaConsumer {
               + "=org.apache.kafka.clients.consumer.RoundRobinAssignor"
       }
   )
-  public void consume(ConsumerRecord<String, String> record, Acknowledgment acknowledgment)
-      throws JsonProcessingException {
-    var result = objectMapper.readValue(record.value(), KafkaDoneMessage.class);
+  public void consume(ConsumerRecord<String, String> record, Acknowledgment acknowledgment) {
+    var result = gson.fromJson(record.value(), KafkaDoneMessage.class);
 
     var filterImageInfo = imageFilterRequestRepository.findById(result.getRequestId()).orElse(null);
 

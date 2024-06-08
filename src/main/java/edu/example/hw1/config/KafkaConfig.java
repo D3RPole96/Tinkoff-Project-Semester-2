@@ -33,8 +33,7 @@ public class KafkaConfig {
    *
    * @param wipTopic  WIP topic
    * @param doneTopic DONE topic
-   * @param wipPartitions WIP partitions
-   * @param donePartitions DONE partitions
+   * @param partitions partitions
    * @param replicas replicas count
    * @return NewTopics topics
    */
@@ -42,26 +41,20 @@ public class KafkaConfig {
   public NewTopics topic(
       @Value("${app.wip-topic}") String wipTopic,
       @Value("${app.done-topic}") String doneTopic,
-      @Value("${app.wip-partitions}") int wipPartitions,
-      @Value("${app.done-partitions}") int donePartitions,
+      @Value("${app.partitions}") int partitions,
       @Value("${app.replicas}") short replicas) {
 
-    return new NewTopics(new NewTopic(wipTopic, wipPartitions, replicas),
-        new NewTopic(doneTopic, donePartitions, replicas));
+    return new NewTopics(new NewTopic(wipTopic, partitions, replicas),
+        new NewTopic(doneTopic, partitions, replicas));
   }
 
   /**
    * KafkaTemplate bean.
    *
-   * @param username Kafka username
-   * @param password Kafka password
    * @return KafkaTemplate Kafka template
    */
   @Bean
-  public KafkaTemplate<String, String> kafkaTemplate(@Value("${app.kafka.username}")
-                                                     String username,
-                                                     @Value("${app.kafka.password}")
-                                                     String password) {
+  public KafkaTemplate<String, String> kafkaTemplate() {
     var props = properties.buildProducerProperties(null);
 
     // Работаем со строками
@@ -83,13 +76,6 @@ public class KafkaConfig {
 
     // ALL_ACKS_KAFKA_TEMPLATE
     props.put(ProducerConfig.ACKS_CONFIG, "all");
-
-    // SASL mechanism PLAIN
-    props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, "SASL_PLAINTEXT");
-    props.put(SaslConfigs.SASL_MECHANISM, "PLAIN");
-    props.put(SaslConfigs.SASL_JAAS_CONFIG,
-        "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"" + username
-            + "\" password=\"" + password + "\";");
 
     var defaultKafkaProducerFactory = new DefaultKafkaProducerFactory<String, String>(props);
     return new KafkaTemplate<>(defaultKafkaProducerFactory);

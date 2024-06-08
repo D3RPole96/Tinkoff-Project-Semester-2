@@ -46,7 +46,6 @@ public class ImageFiltersController {
    *
    * @param imageId Image id
    * @return ApplyImageFiltersResponse Apply image filters response
-   * @throws Exception One of the errors
    */
   @Operation(summary = "Применение указанных фильтров к изображению",
       operationId = "applyImageFilters")
@@ -61,13 +60,11 @@ public class ImageFiltersController {
           content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
               schema = @Schema(implementation = UiSuccessContainer.class)))
   })
-  @PostMapping(value = "/image/{image-id}/filters/apply",
-      consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  @PostMapping(value = "/image/{image-id}/filters/apply")
   public ApplyImageFiltersResponse applyImageFilters(@PathVariable("image-id") String imageId,
                                                      @RequestParam String[] filters,
                                                      @RequestHeader(HttpHeaders.AUTHORIZATION)
-                                                     String bearerToken)
-      throws Exception {
+                                                     String bearerToken) {
     var jwtToken = bearerToken.substring("Bearer ".length());
     var authorUsername = jwtService.getUsernameFromToken(jwtToken);
     var uuidImageId = UUID.fromString(imageId);
@@ -83,7 +80,6 @@ public class ImageFiltersController {
    *
    * @param imageId Image id
    * @return ApplyImageFiltersResponse Apply image filters response
-   * @throws Exception One of the errors
    */
   @Operation(summary = "Получение ИД измененного файла по ИД запроса",
       operationId = "getModifiedImageByRequestId")
@@ -98,8 +94,7 @@ public class ImageFiltersController {
           content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
               schema = @Schema(implementation = UiSuccessContainer.class)))
   })
-  @PostMapping(value = "/image/{image-id}/filters/{request-id}",
-      consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  @PostMapping(value = "/image/{image-id}/filters/{request-id}")
   public GetModifiedImageByRequestIdResponse getModifiedImageByRequestId(
       @PathVariable("image-id") String imageId,
       @PathVariable("request-id") String requestId,

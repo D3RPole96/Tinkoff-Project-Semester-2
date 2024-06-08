@@ -46,7 +46,4 @@ public class ImageFilterRequestEntity {
   @Column(name = "status")
   @Enumerated(EnumType.STRING)
   private Status status;
-
-  @OneToMany(mappedBy = "imageFilterRequest", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-  private List<FilterToImageEntity> filtersToImage = new ArrayList<>();
 }
