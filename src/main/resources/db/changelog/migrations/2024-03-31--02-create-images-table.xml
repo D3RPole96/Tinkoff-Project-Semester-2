@@ -33,7 +33,9 @@
                 baseColumnNames="user_id"
                 constraintName="images_user_id_fk"
                 referencedTableName="users"
-                referencedColumnNames="id"/>
+                referencedColumnNames="id"
+                onUpdate="CASCADE"
+                onDelete="CASCADE"/>
     </changeSet>
 
 </databaseChangeLog>

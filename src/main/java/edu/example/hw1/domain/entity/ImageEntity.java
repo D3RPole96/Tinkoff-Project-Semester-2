@@ -11,13 +11,20 @@ import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.util.UUID;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 /**
  * Image entity. Primary key type: UUID.
  */
-@Data
 @Entity
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 @Table(name = "images")
 @Accessors(chain = true)
 public class ImageEntity implements Serializable {

@@ -16,4 +16,6 @@ public interface ImageService {
   void deleteImage(UUID imageId, String authorUsername) throws Exception;
 
   List<ImageEntity> getUserImages(String username);
+
+  ImageEntity getImageMeta(UUID imageId, String authorUsername);
 }
