@@ -1,7 +1,6 @@
 package edu.example.hw1.kafka;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import edu.example.hw1.kafka.models.KafkaDoneMessage;
 import edu.example.hw1.kafka.models.KafkaWipMessage;
 import java.util.UUID;
@@ -17,7 +16,7 @@ public class KafkaProducer {
   private final KafkaTemplate<String, String> template;
   private final String wipTopic;
   private final String doneTopic;
-  private final ObjectMapper objectMapper = new ObjectMapper();
+  private final Gson gson = new Gson();
 
   /**
    * KafkaProducer constructor.
@@ -28,7 +27,7 @@ public class KafkaProducer {
    */
   public KafkaProducer(KafkaTemplate<String, String> template,
                        @Value("${app.wip-topic}") String wipTopic,
-                       @Value("${app.done-topic") String doneTopic) {
+                       @Value("${app.done-topic}") String doneTopic) {
     this.template = template;
     this.wipTopic = wipTopic;
     this.doneTopic = doneTopic;
@@ -39,13 +38,13 @@ public class KafkaProducer {
    *
    * @param kafkaWipMessage Message to write
    */
-  public void write(KafkaWipMessage kafkaWipMessage) throws JsonProcessingException {
-    var kafkaWipMessageJson = objectMapper.writeValueAsString(kafkaWipMessage);
+  public void write(KafkaWipMessage kafkaWipMessage) {
+    var kafkaWipMessageJson = gson.toJson(kafkaWipMessage);
     template.send(wipTopic, kafkaWipMessageJson);
 
     // заглушка, пока нету обработчиков, эта штука будет выпилена в след. дз
     var kafkaDoneMessage = new KafkaDoneMessage(UUID.randomUUID(), kafkaWipMessage.getRequestId());
-    var kafkaDoneMessageJson = objectMapper.writeValueAsString(kafkaDoneMessage);
+    var kafkaDoneMessageJson = gson.toJson(kafkaDoneMessage);
     template.send(doneTopic, kafkaDoneMessageJson);
   }
 }

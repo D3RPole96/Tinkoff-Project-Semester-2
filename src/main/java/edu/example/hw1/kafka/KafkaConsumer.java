@@ -1,7 +1,6 @@
 package edu.example.hw1.kafka;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import edu.example.hw1.domain.utils.Status;
 import edu.example.hw1.kafka.models.KafkaDoneMessage;
 import edu.example.hw1.repository.ImageFilterRequestRepository;
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 public class KafkaConsumer {
-  private final ObjectMapper objectMapper = new ObjectMapper();
+  private final Gson gson = new Gson();
   private final ImageFilterRequestRepository imageFilterRequestRepository;
 
   /**
@@ -38,9 +37,8 @@ public class KafkaConsumer {
               + "=org.apache.kafka.clients.consumer.RoundRobinAssignor"
       }
   )
-  public void consume(ConsumerRecord<String, String> record, Acknowledgment acknowledgment)
-      throws JsonProcessingException {
-    var result = objectMapper.readValue(record.value(), KafkaDoneMessage.class);
+  public void consume(ConsumerRecord<String, String> record, Acknowledgment acknowledgment) {
+    var result = gson.fromJson(record.value(), KafkaDoneMessage.class);
 
     var filterImageInfo = imageFilterRequestRepository.findById(result.getRequestId()).orElse(null);
 
