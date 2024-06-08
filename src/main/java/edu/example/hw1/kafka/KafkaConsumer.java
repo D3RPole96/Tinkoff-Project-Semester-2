@@ -6,7 +6,6 @@ import edu.example.hw1.domain.utils.Status;
 import edu.example.hw1.kafka.models.KafkaDoneMessage;
 import edu.example.hw1.repository.ImageFilterRequestRepository;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Component;
 /**
  * Kafka consumer.
  */
-@Slf4j
 @Component
 @AllArgsConstructor
 public class KafkaConsumer {
@@ -32,7 +30,7 @@ public class KafkaConsumer {
   @KafkaListener(
       topics = "${app.done-topic}",
       groupId = "${app.group-id}",
-      concurrency = "${app.done-partitions}",
+      concurrency = "${app.partitions}",
       properties = {
           ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG + "=false",
           ConsumerConfig.ISOLATION_LEVEL_CONFIG + "=read_committed",

@@ -61,8 +61,7 @@ public class ImageFiltersController {
           content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
               schema = @Schema(implementation = UiSuccessContainer.class)))
   })
-  @PostMapping(value = "/image/{image-id}/filters/apply",
-      consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  @PostMapping(value = "/image/{image-id}/filters/apply")
   public ApplyImageFiltersResponse applyImageFilters(@PathVariable("image-id") String imageId,
                                                      @RequestParam String[] filters,
                                                      @RequestHeader(HttpHeaders.AUTHORIZATION)
@@ -98,8 +97,7 @@ public class ImageFiltersController {
           content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
               schema = @Schema(implementation = UiSuccessContainer.class)))
   })
-  @PostMapping(value = "/image/{image-id}/filters/{request-id}",
-      consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  @PostMapping(value = "/image/{image-id}/filters/{request-id}")
   public GetModifiedImageByRequestIdResponse getModifiedImageByRequestId(
       @PathVariable("image-id") String imageId,
       @PathVariable("request-id") String requestId,
