@@ -1,0 +1,32 @@
+version: '3.5'
+services:
+  filter-one:
+    image: kyultex/tinkoff-project-semester-two-filter-one:0.0.1
+    container_name: filter-one
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8181:8181"
+    depends_on:
+      - postgres
+    environment:
+      - SERVER_PORT=8181
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/first-filter-db
+      - MINIO_URL=minio
+
+  postgres:
+    image: postgres:15.6-alpine
+    container_name: filter-one-postgres-container
+    environment:
+      POSTGRES_DB: first-filter-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "25001:5432"
+    volumes:
+      - first-filter-db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  first-filter-db-data:

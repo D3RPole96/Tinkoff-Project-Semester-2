@@ -1,0 +1,54 @@
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://localhost:25002/second-filter-db
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver
+  liquibase:
+    change-log: classpath:/db/changelog/db-changelog.xml
+    enabled: true
+    drop-first: false
+    default-schema: public
+  kafka:
+    listener.ack-mode: manual
+    consumer.enable-auto-commit: false
+    bootstrap-servers:
+      - localhost:9092
+      - localhost:9093
+      - localhost:9094
+  cloud:
+    zookeeper:
+      config.enabled: false
+      connect-string: localhost:2181
+
+sf-minio:
+  url: http://localhost:9000
+  port: 9000
+  access-key: user
+  secret-key: password
+  secure: false
+  bucket: minio-storage
+  image-size: 10485760
+
+logging:
+  level:
+    "liquibase": info
+
+springdoc:
+  swagger-ui:
+    path: /swagger.html
+
+app:
+  wip-topic: images.wip
+  done-topic: images.done
+  wip-partitions: 3
+  done-partitions: 1
+  replicas: 3
+  group-id: second-filter-group-id

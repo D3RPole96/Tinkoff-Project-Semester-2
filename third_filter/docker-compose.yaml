@@ -1,0 +1,32 @@
+version: '3.5'
+services:
+  filter-three:
+    image: kyultex/tinkoff-project-semester-two-filter-three:0.0.1
+    container_name: filter-three
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8383:8383"
+    depends_on:
+      - postgres
+    environment:
+      - SERVER_PORT=8383
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/third-filter-db
+      - MINIO_URL=minio
+
+  postgres:
+    image: postgres:15.6-alpine
+    container_name: filter-three-postgres-container
+    environment:
+      POSTGRES_DB: third-filter-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "25003:5432"
+    volumes:
+      - third-filter-db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  third-filter-db-data:
