@@ -32,7 +32,7 @@ public class KafkaConsumer {
   /**
    * Kafka listener.
    *
-   * @param record ConsumerRecord
+   * @param record         ConsumerRecord
    * @param acknowledgment Acknowledgment
    */
   @KafkaListener(
@@ -75,8 +75,7 @@ public class KafkaConsumer {
           imageEntity.getLink(),
           result.getImageName());
       kafkaProducer.writeDone(doneMessage);
-    }
-    else {
+    } else {
       var multipartFile = new MultipartFileImplementation(filteredImage,
           result.getImageName(),
           null);

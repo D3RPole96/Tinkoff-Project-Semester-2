@@ -8,8 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class SecondFilterApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(SecondFilterApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(SecondFilterApplication.class, args);
+  }
 }

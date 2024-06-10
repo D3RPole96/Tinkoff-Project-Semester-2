@@ -5,9 +5,9 @@ import edu.example.filter.second.kafka.models.Filter;
 import edu.example.filter.second.kafka.models.KafkaDoneMessage;
 import edu.example.filter.second.kafka.models.KafkaWipMessage;
 import edu.example.filter.second.models.MultipartFileImplementation;
+import edu.example.filter.second.models.RequestEntity;
 import edu.example.filter.second.repository.RequestRepository;
 import edu.example.filter.second.service.MinioService;
-import edu.example.filter.second.models.RequestEntity;
 import edu.example.filter.second.service.SecondFilterService;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class KafkaConsumer {
   /**
    * Kafka listener.
    *
-   * @param record ConsumerRecord
+   * @param record         ConsumerRecord
    * @param acknowledgment Acknowledgment
    */
   @KafkaListener(
@@ -75,8 +75,7 @@ public class KafkaConsumer {
           imageEntity.getLink(),
           result.getImageName());
       kafkaProducer.writeDone(doneMessage);
-    }
-    else {
+    } else {
       var multipartFile = new MultipartFileImplementation(filteredImage,
           result.getImageName(),
           null);

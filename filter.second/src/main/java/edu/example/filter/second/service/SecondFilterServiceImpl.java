@@ -35,18 +35,18 @@ public class SecondFilterServiceImpl implements SecondFilterService {
 
     for (int y = 0; y < invertedImage.getHeight(); y++) {
       for (int x = 0; x < invertedImage.getWidth(); x++) {
-        int rgba = invertedImage.getRGB(x, y);
-        int alpha = (rgba >> 24) & 0xff;
-        int red = (rgba >> 16) & 0xff;
-        int green = (rgba >> 8) & 0xff;
-        int blue = rgba & 0xff;
+        var rgba = invertedImage.getRGB(x, y);
+        final int alpha = (rgba >> 24) & 0xff;
+        var red = (rgba >> 16) & 0xff;
+        var green = (rgba >> 8) & 0xff;
+        var blue = rgba & 0xff;
 
         red = 255 - red;
         green = 255 - green;
         blue = 255 - blue;
 
-        int invertedRGBA = (alpha << 24) | (red << 16) | (green << 8) | blue;
-        invertedImage.setRGB(x, y, invertedRGBA);
+        var invertedRgba = (alpha << 24) | (red << 16) | (green << 8) | blue;
+        invertedImage.setRGB(x, y, invertedRgba);
       }
     }
 

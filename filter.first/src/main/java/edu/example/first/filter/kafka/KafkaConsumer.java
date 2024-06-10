@@ -1,12 +1,13 @@
 package edu.example.first.filter.kafka;
 
 import com.google.gson.Gson;
-import edu.example.first.filter.models.RequestEntity;
-import edu.example.first.filter.repository.RequestRepository;
-import edu.example.first.filter.service.FirstFilterService;
+import edu.example.first.filter.kafka.models.Filter;
 import edu.example.first.filter.kafka.models.KafkaDoneMessage;
 import edu.example.first.filter.kafka.models.KafkaWipMessage;
 import edu.example.first.filter.models.MultipartFileImplementation;
+import edu.example.first.filter.models.RequestEntity;
+import edu.example.first.filter.repository.RequestRepository;
+import edu.example.first.filter.service.FirstFilterService;
 import edu.example.first.filter.service.MinioService;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,6 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
-
-import static edu.example.first.filter.kafka.models.Filter.SPATIAL_HIGHPASS;
 
 /**
  * Kafka consumer.
@@ -33,7 +32,7 @@ public class KafkaConsumer {
   /**
    * Kafka listener.
    *
-   * @param record ConsumerRecord
+   * @param record         ConsumerRecord
    * @param acknowledgment Acknowledgment
    */
   @KafkaListener(
@@ -51,7 +50,7 @@ public class KafkaConsumer {
       throws Exception {
     var result = gson.fromJson(record.value(), KafkaWipMessage.class);
 
-    if (result.getFilters().get(0) != SPATIAL_HIGHPASS) {
+    if (result.getFilters().get(0) != Filter.SPATIAL_HIGHPASS) {
       acknowledgment.acknowledge();
       return;
     }
@@ -76,8 +75,7 @@ public class KafkaConsumer {
           imageEntity.getLink(),
           result.getImageName());
       kafkaProducer.writeDone(doneMessage);
-    }
-    else {
+    } else {
       var multipartFile = new MultipartFileImplementation(filteredImage,
           result.getImageName(),
           null);
