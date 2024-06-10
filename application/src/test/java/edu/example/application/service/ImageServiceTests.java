@@ -8,6 +8,7 @@ import edu.example.application.domain.entity.UserEntity;
 import edu.example.application.domain.entity.UserRole;
 import edu.example.application.domain.service.ImageService;
 import edu.example.application.domain.service.ImageServiceImpl;
+import edu.example.application.domain.service.MinioService;
 import edu.example.application.domain.service.UserService;
 import edu.example.application.repository.ImageRepository;
 import edu.example.application.repository.UserRepository;
@@ -60,7 +61,7 @@ public class ImageServiceTests {
     doNothing().when(minioService).deleteImage(anyString());
     doReturn(new byte[0]).when(minioService).downloadImage(anyString());
 
-    imageService = new ImageServiceImpl(imageRepository, minioService, userService);
+    imageService = new ImageServiceImpl(imageRepository, userService, minioService);
   }
 
   @Test

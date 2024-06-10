@@ -1,4 +1,4 @@
-package edu.example.common.components.minio.models;
+package edu.example.first_filter.models;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

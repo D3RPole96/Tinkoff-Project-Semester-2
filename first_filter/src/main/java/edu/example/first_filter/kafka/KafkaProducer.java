@@ -1,8 +1,8 @@
 package edu.example.first_filter.kafka;
 
 import com.google.gson.Gson;
-import edu.example.common.components.kafka.models.KafkaDoneMessage;
-import edu.example.common.components.kafka.models.KafkaWipMessage;
+import edu.example.first_filter.kafka.models.KafkaDoneMessage;
+import edu.example.first_filter.kafka.models.KafkaWipMessage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;

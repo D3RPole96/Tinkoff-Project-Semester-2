@@ -1,7 +1,7 @@
-package edu.example.common.components.minio;
+package edu.example.application.domain.service;
 
-import edu.example.common.components.minio.config.MinioProperties;
-import edu.example.common.components.minio.dto.ImageDto;
+import edu.example.application.config.MinioProperties;
+import edu.example.application.domain.entity.dto.ImageDto;
 import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
@@ -16,14 +16,11 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * Implementation of MinIO S3 storage service.
  */
-public class MinioService {
+@Service
+@RequiredArgsConstructor
+public class MinioServiceImpl implements MinioService {
   private final MinioClient client;
   private final MinioProperties properties;
-
-  public MinioService(MinioClient client, MinioProperties properties) {
-    this.client = client;
-    this.properties = properties;
-  }
 
   /**
    * Upload image to S3.

@@ -1,7 +1,7 @@
 package edu.example.application.domain.service;
 
 import edu.example.application.domain.entity.ImageFilterRequestEntity;
-import edu.example.common.components.kafka.models.Filter;
+import edu.example.application.kafka.models.Filter;
 import java.util.List;
 import java.util.UUID;
 

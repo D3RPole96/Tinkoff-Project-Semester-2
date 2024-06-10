@@ -10,5 +10,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "ff-minio")
-public class MinioProperties extends edu.example.common.components.minio.config.MinioProperties {
+public class MinioProperties {
+  private String url;
+  private int port;
+  private String accessKey;
+  private String secretKey;
+  private boolean secure;
+  private String bucket;
+  private long imageSize;
 }

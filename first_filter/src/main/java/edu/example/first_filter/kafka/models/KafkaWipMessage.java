@@ -1,4 +1,4 @@
-package edu.example.common.components.kafka.models;
+package edu.example.first_filter.kafka.models;
 
 import java.io.Serializable;
 import java.util.List;

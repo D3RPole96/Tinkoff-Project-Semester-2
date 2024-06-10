@@ -1,49 +1,36 @@
 package edu.example.third_filter.kafka;
 
 import com.google.gson.Gson;
-import edu.example.common.components.kafka.models.KafkaDoneMessage;
-import edu.example.common.components.kafka.models.KafkaWipMessage;
-import edu.example.common.components.minio.MinioService;
-import edu.example.common.components.minio.models.MultipartFileImplementation;
 import edu.example.third_filter.config.MinioProperties;
+import edu.example.third_filter.kafka.models.KafkaDoneMessage;
+import edu.example.third_filter.kafka.models.KafkaWipMessage;
+import edu.example.third_filter.models.MultipartFileImplementation;
 import edu.example.third_filter.models.RequestEntity;
 import edu.example.third_filter.repository.RequestRepository;
+import edu.example.third_filter.service.MinioService;
 import edu.example.third_filter.service.ThirdFilterService;
 import io.minio.MinioClient;
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
-import static edu.example.common.components.kafka.models.Filter.GRAYSCALE;
+import static edu.example.third_filter.kafka.models.Filter.GRAYSCALE;
 
 /**
  * Kafka consumer.
  */
 @Component
+@RequiredArgsConstructor
 public class KafkaConsumer {
-  private final Gson gson;
+  private final Gson gson = new Gson();
   private final ThirdFilterService thirdFilterService;
   private final MinioService minioService;
   private final KafkaProducer kafkaProducer;
   private final RequestRepository requestRepository;
-
-  /**
-   * Constructor of Kafka consumer.
-   */
-  public KafkaConsumer(ThirdFilterService thirdFilterService,
-                       KafkaProducer kafkaProducer,
-                       RequestRepository requestRepository,
-                       MinioProperties minioProperties,
-                       MinioClient minioClient) {
-    gson = new Gson();
-    this.thirdFilterService = thirdFilterService;
-    this.kafkaProducer = kafkaProducer;
-    this.requestRepository = requestRepository;
-    minioService = new MinioService(minioClient, minioProperties);
-  }
 
   /**
    * Kafka listener.

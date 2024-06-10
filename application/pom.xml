@@ -169,10 +169,9 @@
         </dependency>
 
         <dependency>
-            <groupId>edu.example</groupId>
-            <artifactId>componentsfff</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>8.5.8</version>
         </dependency>
     </dependencies>
 

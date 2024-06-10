@@ -1,4 +1,4 @@
-package edu.example.common.components.minio.dto;
+package edu.example.second_filter.models;
 
 import java.util.UUID;
 import lombok.Data;

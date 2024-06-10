@@ -2,12 +2,9 @@ package edu.example.application.domain.service;
 
 import edu.example.application.api.exceptions.EntityNotFoundException;
 import edu.example.application.api.exceptions.FileAccessException;
-import edu.example.application.config.MinioConfig;
 import edu.example.application.config.MinioProperties;
 import edu.example.application.domain.entity.ImageEntity;
 import edu.example.application.repository.ImageRepository;
-import edu.example.common.components.minio.MinioService;
-import io.minio.MinioClient;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -18,22 +15,11 @@ import org.springframework.web.multipart.MultipartFile;
  * Implementation of images service.
  */
 @Service
+@RequiredArgsConstructor
 public class ImageServiceImpl implements ImageService {
   private final ImageRepository imageRepository;
   private final UserService userService;
   private final MinioService minioService;
-
-  /**
-   * Constructor of implementation of images service.
-   */
-  public ImageServiceImpl(ImageRepository imageRepository,
-                          UserService userService,
-                          MinioProperties minioProperties,
-                          MinioClient minioClient) {
-    this.imageRepository = imageRepository;
-    this.userService = userService;
-    minioService = new MinioService(minioClient, minioProperties);
-  }
 
   @Override
   public byte[] downloadImage(UUID imageId, String authorUsername) throws Exception {

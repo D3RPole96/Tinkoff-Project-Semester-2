@@ -1,17 +1,13 @@
 package edu.example.application.kafka;
 
 import com.google.gson.Gson;
-import edu.example.application.config.MinioProperties;
-import edu.example.application.domain.service.UserService;
-import edu.example.application.repository.ImageRepository;
-import edu.example.common.components.minio.MinioService;
-import edu.example.common.components.minio.models.MultipartFileImplementation;
+import edu.example.application.domain.entity.MultipartFileImplementation;
 import edu.example.application.domain.service.ImageService;
+import edu.example.application.domain.service.MinioService;
 import edu.example.application.domain.utils.Status;
+import edu.example.application.kafka.models.KafkaDoneMessage;
 import edu.example.application.repository.ImageFilterRequestRepository;
-import edu.example.common.components.kafka.models.KafkaDoneMessage;
-import io.minio.MinioClient;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -22,24 +18,12 @@ import org.springframework.stereotype.Component;
  * Kafka consumer.
  */
 @Component
+@RequiredArgsConstructor
 public class KafkaConsumer {
-  private final Gson gson;
+  private final Gson gson = new Gson();
   private final ImageFilterRequestRepository imageFilterRequestRepository;
   private final ImageService imageService;
   private final MinioService minioService;
-
-  /**
-   * Constructor of implementation of images service.
-   */
-  public KafkaConsumer(ImageFilterRequestRepository imageFilterRequestRepository,
-                       ImageService imageService,
-                       MinioProperties minioProperties,
-                       MinioClient minioClient) {
-    gson = new Gson();
-    this.imageFilterRequestRepository = imageFilterRequestRepository;
-    this.imageService = imageService;
-    minioService = new MinioService(minioClient, minioProperties);
-  }
 
   /**
    * Kafka listener.

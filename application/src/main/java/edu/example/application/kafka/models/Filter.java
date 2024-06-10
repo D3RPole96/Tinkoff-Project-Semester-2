@@ -1,4 +1,4 @@
-package edu.example.common.components.kafka.models;
+package edu.example.application.kafka.models;
 
 /**
  * Filters.

@@ -1,7 +1,7 @@
 package edu.example.application.kafka;
 
 import com.google.gson.Gson;
-import edu.example.common.components.kafka.models.KafkaWipMessage;
+import edu.example.application.kafka.models.KafkaWipMessage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
