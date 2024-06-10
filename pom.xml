@@ -18,9 +18,9 @@
 
     <modules>
         <module>application</module>
-        <module>first_filter</module>
-        <module>second_filter</module>
-        <module>third_filter</module>
+        <module>filter.first</module>
+        <module>filter.second</module>
+        <module>filter.third</module>
     </modules>
 
 </project>

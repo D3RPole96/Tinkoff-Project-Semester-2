@@ -4,7 +4,7 @@ import edu.example.application.api.dto.GetImagesResponse;
 import edu.example.application.api.dto.UiSuccessContainer;
 import edu.example.application.api.dto.UploadImageResponse;
 import edu.example.application.api.mapper.ImageMapper;
-import edu.example.common.components.minio.models.MultipartFileImplementation;
+import edu.example.application.domain.entity.MultipartFileImplementation;
 import edu.example.application.domain.service.ImageService;
 import edu.example.application.domain.service.JwtService;
 import io.swagger.v3.oas.annotations.Operation;
