@@ -6,7 +6,7 @@ import edu.example.application.api.dto.UiSuccessContainer;
 import edu.example.application.api.mapper.ImageFilterRequestMapper;
 import edu.example.application.domain.service.ImageFilterRequestService;
 import edu.example.application.domain.service.JwtService;
-import edu.example.common.components.kafka.models.Filter;
+import edu.example.application.kafka.models.Filter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
