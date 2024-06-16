@@ -41,6 +41,9 @@ public class ImageEntity implements Serializable {
   @Column(name = "link", length = 300)
   private String link;
 
+  @Column(name = "content_type", length = 300)
+  private String contentType;
+
   @ManyToOne
   @JoinColumn(name = "user_id", referencedColumnName = "id")
   private UserEntity user;

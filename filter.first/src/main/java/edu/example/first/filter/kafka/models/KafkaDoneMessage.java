@@ -16,4 +16,5 @@ public class KafkaDoneMessage implements Serializable {
   String authorUsername;
   String link;
   String imageName;
+  String contentType;
 }

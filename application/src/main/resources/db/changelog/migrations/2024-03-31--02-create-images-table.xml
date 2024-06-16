@@ -26,6 +26,10 @@
             <column name="link" type="varchar(300)">
                 <constraints nullable="false"/>
             </column>
+
+            <column name="content_type" type="varchar(300)">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
         <addForeignKeyConstraint

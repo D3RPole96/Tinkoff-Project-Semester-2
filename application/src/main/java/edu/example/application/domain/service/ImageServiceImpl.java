@@ -42,7 +42,8 @@ public class ImageServiceImpl implements ImageService {
     var image = new ImageEntity()
         .setName(imageDto.getName())
         .setSize(imageDto.getSize())
-        .setLink(imageDto.getLink());
+        .setLink(imageDto.getLink())
+        .setContentType(imageDto.getContentType());
     image.setUser(user);
 
     imageRepository.save(image);

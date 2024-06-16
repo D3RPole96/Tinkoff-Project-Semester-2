@@ -28,7 +28,7 @@ public class MultipartFileImplementation implements MultipartFile {
 
   @Override
   public String getOriginalFilename() {
-    return null;
+    return name;
   }
 
   @Override

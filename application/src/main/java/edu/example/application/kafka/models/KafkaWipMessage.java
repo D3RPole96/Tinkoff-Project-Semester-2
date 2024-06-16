@@ -19,5 +19,6 @@ public class KafkaWipMessage implements Serializable {
   String authorUsername;
   String link;
   String imageName;
+  String contentType;
   List<Filter> filters;
 }

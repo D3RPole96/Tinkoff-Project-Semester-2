@@ -37,6 +37,7 @@ public class ImageFilterRequestServiceImpl implements ImageFilterRequestService 
         authorUsername,
         imageMeta.getLink(),
         imageMeta.getName(),
+        imageMeta.getContentType(),
         filters);
 
     kafkaProducer.write(kafkaWipMessage);

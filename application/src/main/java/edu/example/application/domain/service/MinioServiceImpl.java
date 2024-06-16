@@ -42,6 +42,7 @@ public class MinioServiceImpl implements MinioService {
     return new ImageDto()
         .setName(file.getOriginalFilename())
         .setSize(file.getSize())
+        .setContentType(file.getContentType())
         .setLink(fileId);
   }
 

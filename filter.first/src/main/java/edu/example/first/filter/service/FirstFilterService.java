@@ -6,5 +6,5 @@ import java.io.IOException;
  * Interface of first filter service.
  */
 public interface FirstFilterService {
-  byte[] apply(byte[] imageBytes) throws IOException;
+  byte[] apply(byte[] imageBytes, String contentType) throws IOException;
 }

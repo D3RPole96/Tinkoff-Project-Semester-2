@@ -14,4 +14,5 @@ public class ImageDto {
   private String name;
   private Long size;
   private String link;
+  String contentType;
 }

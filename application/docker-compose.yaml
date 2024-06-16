@@ -1,19 +1,19 @@
 version: '3.5'
 services:
-  #service-back:
-  #  image: kyultex/tinkoff-project-semester-two-back:0.0.1
-  #  container_name: backend-service-container
-  #  build:
-  #    context: .
-  #    dockerfile: Dockerfile
-  #  ports:
-  #    - "8080:8080"
-  #  depends_on:
-  #    - postgres
-  #  environment:
-  #    - SERVER_PORT=8080
-  #    - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/tinkoff-hw-db
-  #    - MINIO_URL=minio
+  service-back:
+    image: kyultex/tinkoff-project-semester-two-back:0.0.1
+    container_name: backend-service-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/tinkoff-hw-db
+      - MINIO_URL=minio
 
   postgres:
     image: postgres:15.6-alpine

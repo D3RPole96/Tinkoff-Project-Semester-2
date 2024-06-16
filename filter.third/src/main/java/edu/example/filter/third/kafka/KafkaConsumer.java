@@ -66,19 +66,20 @@ public class KafkaConsumer {
     if (result.getFilters().size() == 1) {
       var multipartFile = new MultipartFileImplementation(filteredImage,
           result.getImageName() + " filtered",
-          null);
+          result.getContentType());
       var imageEntity = minioService.uploadImage(multipartFile);
 
       var doneMessage = new KafkaDoneMessage(result.getImageId(),
           result.getRequestId(),
           result.getAuthorUsername(),
           imageEntity.getLink(),
-          result.getImageName());
+          result.getImageName(),
+          result.getContentType());
       kafkaProducer.writeDone(doneMessage);
     } else {
       var multipartFile = new MultipartFileImplementation(filteredImage,
           result.getImageName(),
-          null);
+          result.getContentType());
       var imageEntity = minioService.uploadImage(multipartFile);
 
       var remainedFilters = result.getFilters().stream().skip(1).toList();
@@ -87,6 +88,7 @@ public class KafkaConsumer {
           result.getAuthorUsername(),
           imageEntity.getLink(),
           result.getImageName(),
+          result.getContentType(),
           remainedFilters);
       kafkaProducer.writeWip(wipMessage);
     }

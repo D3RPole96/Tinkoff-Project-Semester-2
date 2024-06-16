@@ -50,7 +50,7 @@ public class KafkaConsumer {
 
     var multipartFile = new MultipartFileImplementation(image,
         result.getImageName(),
-        null);
+        result.getContentType());
     var imageEntity = imageService.uploadImageToUser(multipartFile, result.getAuthorUsername());
 
     var filterImageInfo = imageFilterRequestRepository.findById(result.getRequestId()).orElse(null);
