@@ -1,8 +1,8 @@
 package edu.example.imagga.repository;
 
+import edu.example.imagga.models.RequestEntity;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
-import edu.example.imagga.models.RequestEntity;
 
 /**
  * Request repository.

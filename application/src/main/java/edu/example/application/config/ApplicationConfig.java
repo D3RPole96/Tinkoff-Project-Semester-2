@@ -58,6 +58,11 @@ public class ApplicationConfig {
     return new BCryptPasswordEncoder();
   }
 
+  /**
+   * bucket4j Bucket bean.
+   *
+   * @return Bucket
+   */
   @Bean
   public Bucket createBucket() {
     return Bucket.builder()

@@ -1,26 +1,27 @@
 package edu.example.imagga.service;
 
 import edu.example.imagga.client.ImaggaClient;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.image.BufferedImage;
-import java.awt.image.ConvolveOp;
-import java.awt.image.Kernel;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
- * Implementation of second filter service.
+ * Implementation of Imagga filter service.
  */
 @Service
 public class ImaggaFilterServiceImpl implements ImaggaFilterService {
   private final int topTagsCount;
   private final ImaggaClient imaggaClient;
 
+  /**
+   * Constructor of Imagga filter service.
+   */
   public ImaggaFilterServiceImpl(ImaggaClient imaggaClient,
                                  @Value("${imagga.top-tags}") String topTags) {
     this.imaggaClient = imaggaClient;
@@ -29,9 +30,6 @@ public class ImaggaFilterServiceImpl implements ImaggaFilterService {
 
   @Override
   public byte[] apply(byte[] imageBytes, String contentType) throws IOException {
-    var imageUrl = imaggaClient.uploadImage(imageBytes);
-    var topTags = imaggaClient.getTopTags(imageUrl);
-
     var byteArrayInputStream = new ByteArrayInputStream(imageBytes);
     var bufferedImage = ImageIO.read(byteArrayInputStream);
 
@@ -48,6 +46,9 @@ public class ImaggaFilterServiceImpl implements ImaggaFilterService {
 
     graphics.drawString("Tags:", 10, positionY);
     positionY += period;
+
+    var imageUrl = imaggaClient.uploadImage(imageBytes);
+    var topTags = imaggaClient.getTopTags(imageUrl);
     for (var tag : topTags) {
       graphics.drawString(tag, 10, positionY);
       positionY += period;

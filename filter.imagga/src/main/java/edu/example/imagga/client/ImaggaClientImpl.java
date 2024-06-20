@@ -1,5 +1,7 @@
 package edu.example.imagga.client;
 
+import static java.lang.Math.min;
+
 import io.github.bucket4j.Bucket;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
@@ -19,8 +21,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient;
-
-import static java.lang.Math.min;
 
 /**
  * Implementation of Imagga client.
@@ -122,8 +122,9 @@ public class ImaggaClientImpl implements ImaggaClient {
 
     var jsonObject = new JSONObject(httpResponse.getBody());
 
-    if (jsonObject.has("result"))
+    if (jsonObject.has("result")) {
       return jsonObject.getJSONObject("result").getString("upload_id");
+    }
 
     return null;
   }

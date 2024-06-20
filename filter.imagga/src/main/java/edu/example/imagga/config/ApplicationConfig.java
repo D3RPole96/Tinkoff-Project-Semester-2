@@ -12,6 +12,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
+  /**
+   * bucket4j Bucket bean.
+   *
+   * @return Bucket
+   */
   @Bean
   public Bucket createBucket() {
     return Bucket.builder()
