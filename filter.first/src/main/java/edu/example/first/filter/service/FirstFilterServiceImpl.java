@@ -1,8 +1,6 @@
 package edu.example.first.filter.service;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.BufferedImageOp;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.io.ByteArrayInputStream;
@@ -23,7 +21,8 @@ public class FirstFilterServiceImpl implements FirstFilterService {
     var byteArrayInputStream = new ByteArrayInputStream(imageBytes);
     var image = ImageIO.read(byteArrayInputStream);
 
-    var grayImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
+    var grayImage = new BufferedImage(image.getWidth(), image.getHeight(),
+        BufferedImage.TYPE_BYTE_GRAY);
     var g = grayImage.createGraphics();
     g.drawImage(image, 0, 0, null);
     g.dispose();
