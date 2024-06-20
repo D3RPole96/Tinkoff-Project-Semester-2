@@ -28,7 +28,6 @@ public class FirstFilterServiceImpl implements FirstFilterService {
     g.drawImage(image, 0, 0, null);
     g.dispose();
 
-    // Нахождение контуров с помощью операции свертки
     float[] contourKernel = {
         -1, -1, -1,
         -1,  8, -1,
@@ -37,7 +36,6 @@ public class FirstFilterServiceImpl implements FirstFilterService {
     var contourOp = new ConvolveOp(new Kernel(3, 3, contourKernel));
     var contourImage = contourOp.filter(grayImage, null);
 
-    // Преобразование контуров в черно-белое изображение
     for (var y = 0; y < contourImage.getHeight(); y++) {
       for (var x = 0; x < contourImage.getWidth(); x++) {
         var rgb = contourImage.getRGB(x, y);

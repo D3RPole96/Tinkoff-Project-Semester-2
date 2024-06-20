@@ -28,6 +28,9 @@ spring:
       config.enabled: false
       connect-string: localhost:2181
 
+server:
+  port: 8383
+
 tf-minio:
   url: http://localhost:9000
   port: 9000
