@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
- * Implementation of second filter service.
+ * Implementation of first filter service.
  */
 @Service
 @RequiredArgsConstructor

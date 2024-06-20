@@ -51,7 +51,7 @@ springdoc:
 app:
   wip-topic: images.wip
   done-topic: images.done
-  wip-partitions: 3
+  wip-partitions: 4
   done-partitions: 1
   replicas: 3
   group-id: second-filter-group-id
