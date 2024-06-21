@@ -1,5 +1,6 @@
 package edu.example.application.service;
 
+import edu.example.application.Application;
 import edu.example.application.api.exceptions.EntityNotFoundException;
 import edu.example.application.api.exceptions.FileAccessException;
 import edu.example.application.config.PostgreTestConfig;
@@ -35,7 +36,8 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 
 @SpringBootTest
-@ContextConfiguration(initializers = PostgreTestConfig.Initializer.class)
+@ContextConfiguration(initializers = PostgreTestConfig.Initializer.class,
+    classes = Application.class)
 public class ImageServiceTests {
   private final String testUserUsername = "testUser";
   private final String secondTestUserUsername = "testUser2";

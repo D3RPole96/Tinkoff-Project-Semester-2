@@ -260,7 +260,7 @@
 
                 <configuration>
                     <includes>
-                        <include>edu/example/hw1/**/*Service*</include>
+                        <include>edu/example/application/**/*Service*</include>
                     </includes>
                 </configuration>
 
