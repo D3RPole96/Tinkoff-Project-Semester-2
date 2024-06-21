@@ -1,4 +1,4 @@
-package edu.example.filter.second.service;
+package edu.example.filter.second.filter;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;

@@ -1,7 +1,7 @@
-package edu.example.filter.second.service;
+package edu.example.first.filter.filter;
 
-import edu.example.filter.second.config.MinioProperties;
-import edu.example.filter.second.models.ImageDto;
+import edu.example.first.filter.config.MinioProperties;
+import edu.example.first.filter.models.ImageDto;
 import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
