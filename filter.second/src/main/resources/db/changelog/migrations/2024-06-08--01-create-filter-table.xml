@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="2024-06-08--01-create-filter-table" author="kyultex">
+        <createTable tableName="requests">
+            <column name="id" type="uuid" remarks="Уникальный ID запроса">
+                <constraints primaryKey="true" primaryKeyName="user_id_pk"/>
+            </column>
+            <column name="image_id" type="uuid" remarks="ID картинки">
+                <constraints nullable="false"/>
+            </column>
+            <column name="request_id" type="uuid" remarks="ID запроса">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2024-06-08--01-add-unique-constraint" author="kyultex">
+        <addUniqueConstraint
+                columnNames="image_id, request_id"
+                constraintName="image_id_request_id_unique_constraint"
+                tableName="requests"
+        />
+    </changeSet>
+</databaseChangeLog>

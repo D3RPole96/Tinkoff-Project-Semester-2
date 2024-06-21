@@ -1,0 +1,32 @@
+version: '3.5'
+services:
+  filter-two:
+    image: kyultex/tinkoff-project-semester-two-filter-two:0.0.1
+    container_name: filter-two
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8282:8282"
+    depends_on:
+      - postgres
+    environment:
+      - SERVER_PORT=8282
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/second-filter-db
+      - MINIO_URL=minio
+
+  postgres:
+    image: postgres:15.6-alpine
+    container_name: filter-two-postgres-container
+    environment:
+      POSTGRES_DB: second-filter-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "25002:5432"
+    volumes:
+      - second-filter-db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  second-filter-db-data:
