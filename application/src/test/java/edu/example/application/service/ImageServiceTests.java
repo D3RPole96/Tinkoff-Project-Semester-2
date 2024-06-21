@@ -7,6 +7,7 @@ import edu.example.application.config.PostgreTestConfig;
 import edu.example.application.domain.entity.ImageEntity;
 import edu.example.application.domain.entity.UserEntity;
 import edu.example.application.domain.entity.UserRole;
+import edu.example.application.domain.entity.dto.ImageDto;
 import edu.example.application.domain.service.ImageService;
 import edu.example.application.domain.service.ImageServiceImpl;
 import edu.example.application.domain.service.MinioService;
@@ -59,7 +60,7 @@ public class ImageServiceTests {
     imageRepository.deleteAll();
     userRepository.deleteAll();
 
-    doReturn(new ImageEntity().setLink(testImageLink).setName("testName").setSize(1337L)).when(minioService).uploadImage(any());
+    doReturn(new ImageDto().setLink(testImageLink).setName("testName").setSize(1337L)).when(minioService).uploadImage(any());
     doNothing().when(minioService).deleteImage(anyString());
     doReturn(new byte[0]).when(minioService).downloadImage(anyString());
 
@@ -195,6 +196,7 @@ public class ImageServiceTests {
         .setLink("testLink")
         .setName("testName")
         .setSize(1337L)
+        .setContentType("png")
         .setUser(savedUser);
     imageRepository.save(image);
   }
