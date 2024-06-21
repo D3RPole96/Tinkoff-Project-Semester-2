@@ -21,6 +21,7 @@
         <module>filter.first</module>
         <module>filter.second</module>
         <module>filter.third</module>
+        <module>filter.imagga</module>
     </modules>
 
     <build>

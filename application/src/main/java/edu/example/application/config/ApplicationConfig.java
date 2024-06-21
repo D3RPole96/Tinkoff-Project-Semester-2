@@ -1,5 +1,7 @@
 package edu.example.application.config;
 
+import io.github.bucket4j.Bucket;
+import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -54,6 +56,18 @@ public class ApplicationConfig {
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
+  }
+
+  /**
+   * bucket4j Bucket bean.
+   *
+   * @return Bucket
+   */
+  @Bean
+  public Bucket createBucket() {
+    return Bucket.builder()
+        .addLimit(limit -> limit.capacity(10).refillGreedy(10, Duration.ofMinutes(1)))
+        .build();
   }
 }
 

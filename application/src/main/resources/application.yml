@@ -61,7 +61,7 @@ application:
 app:
   wip-topic: images.wip
   done-topic: images.done
-  done-partitions: 3
-  wip-partitions: 1
+  done-partitions: 1
+  wip-partitions: 3
   replicas: 3
   group-id: custom-group-id

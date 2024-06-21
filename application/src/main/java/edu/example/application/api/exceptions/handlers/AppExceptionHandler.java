@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 /**
@@ -55,11 +56,18 @@ public class AppExceptionHandler {
     return handleException("Размер файла превышает 10МБ", HttpStatus.BAD_REQUEST);
   }
 
+  @ExceptionHandler(HttpClientErrorException.class)
+  public ResponseEntity<UiSuccessContainer> handleHttpClientErrorException(
+      HttpClientErrorException httpClientErrorException) {
+    return handleException(httpClientErrorException.getMessage(), HttpStatus.BAD_REQUEST);
+  }
+
   @ExceptionHandler(FileAccessException.class)
   public ResponseEntity<UiSuccessContainer> handleFileAccessException(
       FileAccessException fileAccessException) {
     return handleException(fileAccessException.getMessage(), HttpStatus.NOT_FOUND);
   }
+
 
   private ResponseEntity<UiSuccessContainer> handleException(String exceptionMessage,
                                                              HttpStatusCode status) {

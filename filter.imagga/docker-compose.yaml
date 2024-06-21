@@ -1,0 +1,32 @@
+version: '3.5'
+services:
+  filter-one:
+    image: kyultex/tinkoff-project-semester-two-filter-imagga:0.0.1
+    container_name: filter-imagga
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8484:8484"
+    depends_on:
+      - postgres
+    environment:
+      - SERVER_PORT=8484
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/imagga-filter-db
+      - MINIO_URL=minio
+
+  postgres:
+    image: postgres:15.6-alpine
+    container_name: filter-imagga-postgres-container
+    environment:
+      POSTGRES_DB: imagga-filter-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "25004:5432"
+    volumes:
+      - imagga-filter-db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  imagga-filter-db-data:

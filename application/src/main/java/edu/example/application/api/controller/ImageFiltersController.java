@@ -7,6 +7,7 @@ import edu.example.application.api.mapper.ImageFilterRequestMapper;
 import edu.example.application.domain.service.ImageFilterRequestService;
 import edu.example.application.domain.service.JwtService;
 import edu.example.application.kafka.models.Filter;
+import io.github.bucket4j.Bucket;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -18,6 +19,7 @@ import java.util.Arrays;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 
 /**
  * Image filters controller.
@@ -40,6 +43,7 @@ public class ImageFiltersController {
   private final JwtService jwtService;
   private final ImageFilterRequestService imageFilterRequestService;
   private final ImageFilterRequestMapper imageFilterRequestMapper;
+  private final Bucket bucket;
 
   /**
    * Apply filters to image.
@@ -69,6 +73,10 @@ public class ImageFiltersController {
     var authorUsername = jwtService.getUsernameFromToken(jwtToken);
     var uuidImageId = UUID.fromString(imageId);
     var parsedFilters = Arrays.stream(filters).map(Filter::valueOf).toList();
+    var isConsumed = bucket.tryConsume(1);
+    if (!isConsumed) {
+      throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS, "Слишком много запросов");
+    }
 
     var responseId = imageFilterRequestService
         .applyImageFilters(uuidImageId, parsedFilters, authorUsername);
