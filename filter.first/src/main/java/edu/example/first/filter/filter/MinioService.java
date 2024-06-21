@@ -1,4 +1,4 @@
-package edu.example.first.filter.service;
+package edu.example.first.filter.filter;
 
 import edu.example.first.filter.models.ImageDto;
 import org.springframework.web.multipart.MultipartFile;

@@ -1,4 +1,4 @@
-package edu.example.filter.third.service;
+package edu.example.filter.third.filter;
 
 import java.io.IOException;
 

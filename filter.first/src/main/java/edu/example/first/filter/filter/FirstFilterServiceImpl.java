@@ -1,4 +1,4 @@
-package edu.example.first.filter.service;
+package edu.example.first.filter.filter;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;

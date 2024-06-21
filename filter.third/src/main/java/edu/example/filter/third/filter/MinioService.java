@@ -1,4 +1,4 @@
-package edu.example.filter.third.service;
+package edu.example.filter.third.filter;
 
 import edu.example.filter.third.models.ImageDto;
 import org.springframework.web.multipart.MultipartFile;

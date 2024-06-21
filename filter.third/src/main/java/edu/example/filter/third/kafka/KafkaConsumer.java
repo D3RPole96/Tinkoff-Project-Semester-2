@@ -1,14 +1,14 @@
 package edu.example.filter.third.kafka;
 
 import com.google.gson.Gson;
+import edu.example.filter.third.filter.MinioService;
+import edu.example.filter.third.filter.ThirdFilterService;
 import edu.example.filter.third.kafka.models.Filter;
 import edu.example.filter.third.kafka.models.KafkaDoneMessage;
 import edu.example.filter.third.kafka.models.KafkaWipMessage;
 import edu.example.filter.third.models.MultipartFileImplementation;
 import edu.example.filter.third.models.RequestEntity;
 import edu.example.filter.third.repository.RequestRepository;
-import edu.example.filter.third.service.MinioService;
-import edu.example.filter.third.service.ThirdFilterService;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
